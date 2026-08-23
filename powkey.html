@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>POKEY | Yveltal 3D</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080a10;
+            color: white;
+        }
+
+        #app {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(150, 20, 50, 0.22),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #05070b,
+                    #111621,
+                    #07090e
+                );
+        }
+
+        /* =========================================
+           3D CANVAS
+        ========================================= */
+
+        #viewer {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+            outline: none;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .topbar {
+            position: absolute;
+
+            top: 25px;
+            left: 30px;
+            right: 30px;
+
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            pointer-events: none;
+        }
+
+        .brand {
+            pointer-events: auto;
+        }
+
+        .brand small {
+            display: block;
+
+            transform: translateX(5px);
+
+            margin-bottom: 5px;
+
+            color: #a8afbc;
+
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .brand h1 {
+            font-size: clamp(30px, 5vw, 55px);
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+        }
+
+        .brand h1 span {
+            color: #e73858;
+        }
+
+        /* =========================================
+        MY CARD COLLECTION BUTTON
+        ========================================= */
+
+        .card-collection-button {
+            pointer-events: auto;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 11px 17px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px;
+
+            background: rgba(5, 8, 14, 0.72);
+
+            backdrop-filter: blur(15px);
+
+            color: #e5e8ed;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        /* ICON */
+
+        .card-icon {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 5px;
+
+            background: rgba(231,56,88,0.15);
+
+            color: #ff647c;
+
+            font-size: 12px;
+        }
+
+
+        /* HOVER */
+
+        .card-collection-button:hover {
+
+            transform: translateY(-2px);
+
+            background: rgba(231,56,88,0.18);
+
+            border-color:
+                rgba(231,56,88,0.45);
+
+            box-shadow:
+                0 0 20px rgba(231,56,88,0.25);
+        }
+
+
+        /* ACTIVE */
+
+        .card-collection-button:active {
+
+            transform: scale(0.95);
+
+        }
+        
+        /* =========================================
+           INFORMATION PANEL
+        ========================================= */
+
+        .info-panel {
+            position: absolute;
+
+            z-index: 10;
+
+            left: 30px;
+            bottom: 30px;
+
+            width: 350px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background: rgba(7, 10, 17, 0.75);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .type {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            margin-bottom: 10px;
+
+            border-radius: 6px;
+
+            background: rgba(231,56,88,0.15);
+
+            color: #ff647c;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+        }
+
+        .info-panel h2 {
+            font-size: 28px;
+
+            margin-bottom: 6px;
+        }
+
+        .info-panel p {
+            color: #aeb5c2;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+        /* =========================================
+        POKEMON INFORMATION
+        ========================================= */
+
+        .pokemon-info {
+            margin-top: 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .info-row {
+            display: flex;
+
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding-bottom: 8px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+
+        .info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+
+        .label {
+            min-width: 80px;
+
+            color: #7f8796;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .value {
+            color: #e5e8ed;
+
+            font-size: 12px;
+
+            text-align: right;
+
+            line-height: 1.5;
+        }
+
+
+        .weakness {
+            color: #ff8a9d;
+        }
+
+
+        .ability {
+            color: #d987ff;
+        }
+
+        /* =========================================
+           LOADING
+        ========================================= */
+
+        #loading {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 50;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #07090e;
+
+            transition:
+                opacity 0.5s,
+                visibility 0.5s;
+        }
+
+        #loading.hide {
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+        .loader {
+            text-align: center;
+        }
+
+        .loading-ring {
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            border: 3px solid rgba(255,255,255,0.1);
+
+            border-top-color: #e73858;
+
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            color: #aeb5c2;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        #error {
+            position: absolute;
+
+            z-index: 100;
+
+            display: none;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: min(500px, calc(100vw - 40px));
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background: rgba(35,8,15,0.96);
+
+            border: 1px solid rgba(255,70,100,0.4);
+
+            text-align: center;
+        }
+
+        #error h3 {
+            color: #ff6078;
+
+            margin-bottom: 10px;
+        }
+
+        #error p {
+            color: #c6cbd3;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           HINT
+        ========================================= */
+
+        .hint {
+            position: absolute;
+
+            z-index: 5;
+
+            left: 50%;
+            bottom: 20px;
+
+            transform: translateX(-50%);
+
+            color: rgba(255,255,255,0.25);
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+            pointer-events: none;
+        }
+
+        /* =========================================
+        BASE STATS PANEL
+        ========================================= */
+        .stats-panel {
+            position: absolute;
+            z-index: 10;
+            right: 30px;
+            bottom: 30px;
+            width: 320px;
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: rgba(7, 10, 17, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .stats-panel h3 {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #e5e8ed;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            width: 65px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #7f8796;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            width: 30px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: right;
+        }
+
+        .stat-bar-bg {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #e73858, #ff647c);
+            box-shadow: 0 0 8px rgba(231, 56, 88, 0.6);
+        }
+
+        /* =========================================
+        RESPONSIVE TABLET
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .topbar {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+            }
+
+            .brand h1 {
+                font-size: 40px;
+            }
+
+            .info-panel {
+                left: 20px;
+                bottom: 20px;
+                width: 320px;
+            }
+
+            .stats-panel {
+                right: 20px;
+                bottom: 20px;
+                width: 290px;
+            }
+
+        }
+
+
+        /* =========================================
+        RESPONSIVE SMARTPHONE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            html,
+            body {
+                overflow: hidden;
+            }
+
+            #app {
+                width: 100%;
+                height: 100dvh;
+                min-height: 100dvh;
+            }
+
+
+            /* ================================
+            HEADER
+            ================================= */
+
+            .topbar {
+                top: 15px;
+                left: 15px;
+                right: 15px;
+
+                align-items: flex-start;
+            }
+
+            .brand small {
+                font-size: 8px;
+                letter-spacing: 3px;
+
+                margin-bottom: 4px;
+            }
+
+            .brand h1 {
+                font-size: clamp(28px, 10vw, 40px);
+                letter-spacing: 3px;
+            }
+
+            .card-collection-button {
+                top: 0;
+
+                padding: 9px 11px;
+
+                font-size: 8px;
+
+                gap: 6px;
+            }
+
+            .card-icon {
+                width: 17px;
+                height: 17px;
+
+                font-size: 10px;
+            }
+
+
+            /* ================================
+            3D VIEW
+            ================================= */
+
+            #viewer {
+                width: 100%;
+                height: 100%;
+            }
+
+
+            /* ================================
+            INFORMATION PANEL
+            ================================= */
+
+            .info-panel {
+                left: 12px;
+                bottom: 12px;
+
+                width: calc(50% - 18px);
+
+                padding: 13px 14px;
+
+                border-radius: 14px;
+            }
+
+            .info-panel h2 {
+                font-size: clamp(14px, 3.5vw, 20px);
+                margin-bottom: 5px;
+                white-space: nowrap;
+            }
+
+            .pokemon-info {
+                margin-top: 9px;
+                gap: 5px;
+            }
+
+            .info-row {
+                gap: 5px;
+                padding-bottom: 5px;
+            }
+
+            .label {
+                min-width: 48px;
+                font-size: clamp(7px, 1.8vw, 9px);
+            }
+
+            .value {
+                font-size: clamp(7px, 1.8vw, 10px);
+                line-height: 1.3;
+            }
+
+            .weakness {
+                max-width: 68%;
+            }
+
+
+            /* ================================
+            BASE STATS
+            ================================= */
+
+            .stats-panel {
+                position: absolute;
+
+                right: 12px;
+                bottom: 12px;
+
+                width: calc(50% - 18px);
+
+                padding: 13px 14px;
+
+                border-radius: 14px;
+            }
+
+            .stats-panel h3 {
+                font-size: 10px;
+                letter-spacing: 1.5px;
+
+                margin-bottom: 8px;
+            }
+
+            .stat-row {
+                gap: 5px;
+                margin-bottom: 5px;
+            }
+
+            .stat-label {
+                width: 42px;
+                font-size: clamp(7px, 1.7vw, 9px);
+            }
+
+            .stat-value {
+                width: 22px;
+                font-size: clamp(7px, 1.7vw, 9px);
+            }
+
+            .stat-bar-bg {
+                height: 5px;
+            }
+
+
+            /* ================================
+            HINT
+            ================================= */
+
+            .hint {
+                display: none;
+            }
+
+
+            /* ================================
+            LOADING
+            ================================= */
+
+            .loading-ring {
+                width: 45px;
+                height: 45px;
+
+                border-width: 2px;
+
+                margin-bottom: 14px;
+            }
+
+            .loader-text {
+                font-size: 9px;
+                letter-spacing: 2px;
+            }
+
+
+            /* ================================
+            ERROR
+            ================================= */
+
+            #error {
+                width: calc(100vw - 30px);
+
+                padding: 20px;
+
+                border-radius: 14px;
+            }
+
+            #error h3 {
+                font-size: 18px;
+            }
+
+            #error p {
+                font-size: 11px;
+            }
+
+        }
+
+
+        /* =========================================
+        VERY SMALL SMARTPHONE
+        ========================================= */
+
+        @media (max-width: 380px) {
+
+            .topbar {
+                top: 12px;
+                left: 12px;
+                right: 12px;
+            }
+
+            .brand h1 {
+                font-size: 27px;
+            }
+
+            .info-panel {
+                left: 10px;
+                bottom: 10px;
+
+                width: calc(50% - 15px);
+
+                padding: 10px 11px;
+            }
+
+            .info-panel h2 {
+                font-size: 17px;
+            }
+
+            .pokemon-info {
+                margin-top: 7px;
+                gap: 4px;
+            }
+
+            .info-row {
+                padding-bottom: 4px;
+            }
+
+            .label {
+                min-width: 58px;
+                font-size: 8px;
+            }
+
+            .value {
+                font-size: 9px;
+            }
+
+            .stats-panel {
+                left: auto;
+                right: 10px;
+                bottom: 10px;
+
+                width: calc(50% - 15px);
+
+                padding: 10px 11px;
+            }
+
+            .stats-panel h3 {
+                font-size: 9px;
+                margin-bottom: 6px;
+            }
+
+            .stat-row {
+                margin-bottom: 4px;
+                gap: 5px;
+            }
+
+            .stat-label {
+                width: 48px;
+                font-size: 7px;
+            }
+
+            .stat-value {
+                width: 23px;
+                font-size: 8px;
+            }
+
+            .stat-bar-bg {
+                height: 4px;
+            }
+
+        }
+
+        /* =========================================
+        YVELTAL SOUND BUTTON
+        ========================================= */
+
+        .sound-button {
+            position: absolute;
+
+            z-index: 20;
+
+            top: 100px;
+            right: 30px;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 10px 14px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px;
+
+            background: rgba(7, 10, 17, 0.72);
+
+            backdrop-filter: blur(15px);
+
+            color: #e5e8ed;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .sound-button:hover {
+            transform: translateY(-2px);
+
+            background: rgba(231,56,88,0.18);
+
+            box-shadow:
+                0 0 20px rgba(231,56,88,0.25);
+        }
+
+        .sound-button:active {
+            transform: scale(0.95);
+        }
+
+
+        /* =========================================
+        SOUND ACTIVE
+        ========================================= */
+
+        .sound-button.active {
+            background: rgba(231,56,88,0.25);
+
+            border-color:
+                rgba(231,56,88,0.6);
+
+            box-shadow:
+                0 0 15px rgba(231,56,88,0.4),
+                0 0 35px rgba(231,56,88,0.2);
+        }
+
+
+        /* =========================================
+        YVELTAL ROAR EFFECT
+        ========================================= */
+
+        #viewer.roar-effect {
+            filter:
+                drop-shadow(0 0 20px rgba(231,56,88,0.35));
+        }
+
+
+        /* =========================================
+        MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .sound-button {
+                top: 75px;
+                right: 15px;
+
+                padding: 9px 11px;
+
+                font-size: 9px;
+            }
+
+            .sound-button span {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- =========================================
+         3D CANVAS
+    ========================================== -->
+
+    <canvas id="viewer"></canvas>
+
+
+    <!-- =========================================
+         LOADING SCREEN
+    ========================================== -->
+
+    <div id="loading">
+
+        <div class="loader">
+
+            <div class="loading-ring"></div>
+
+            <div
+                class="loader-text"
+                id="loadingText">
+                Loading Yveltal...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         ERROR MESSAGE
+    ========================================== -->
+
+    <div id="error">
+
+        <h3>
+            Model Gagal Dimuat
+        </h3>
+
+        <p id="errorText">
+            Pastikan file
+            <b>yveltal.glb</b>
+            berada pada folder yang sama
+            dengan pokey.html.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="topbar">
+
+        <div class="brand">
+
+            <small>
+                Welcome
+            </small>
+
+            <h1>
+                GALE<span>H</span>
+            </h1>
+
+        </div>
+
+        <button id="cardCollectionButton" class="card-collection-button">
+            <span class="card-icon">▣</span>
+            <span>MY CARD COLLECTION</span>
+        </button>
+
+    </div>
+
+    <button id="soundButton" class="sound-button">
+        🔊
+        <span>YVELTAL CRY</span>
+    </button>
+
+
+    <!-- =========================================
+         INFORMATION
+    ========================================== -->
+
+    <div class="info-panel">
+
+        <h2>
+            Yveltal | #0717
+        </h2>
+
+        <div class="pokemon-info">
+
+            <div class="info-row">
+                <span class="label">Type</span>
+                <span class="value">Dark / Flying</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Weakness</span>
+                <span class="value weakness">
+                    Electric • Rock • Ice • Fairy
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Height</span>
+                <span class="value">5.8 m</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Weight</span>
+                <span class="value">203.0 kg</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Gender</span>
+                <span class="value">Unknown</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">Abilities</span>
+                <span class="value ability">
+                    Dark Aura
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         BASE STATS (KANAN BAWAH)
+    ========================================== -->
+    <div class="stats-panel">
+        <h3>Base Stats</h3>
+        
+        <div class="stat-row">
+            <span class="stat-label">HP</span>
+            <span class="stat-value">126</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((126 / 255) * 100%);"></div>
+            </div>
+        </div>
+
+        <div class="stat-row">
+            <span class="stat-label">Attack</span>
+            <span class="stat-value">131</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((131 / 255) * 100%);"></div>
+            </div>
+        </div>
+
+        <div class="stat-row">
+            <span class="stat-label">Defense</span>
+            <span class="stat-value">95</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((95 / 255) * 100%);"></div>
+            </div>
+        </div>
+
+        <div class="stat-row">
+            <span class="stat-label">Sp. Atk</span>
+            <span class="stat-value">131</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((131 / 255) * 100%);"></div>
+            </div>
+        </div>
+
+        <div class="stat-row">
+            <span class="stat-label">Sp. Def</span>
+            <span class="stat-value">98</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((98 / 255) * 100%);"></div>
+            </div>
+        </div>
+
+        <div class="stat-row">
+            <span class="stat-label">Speed</span>
+            <span class="stat-value">99</span>
+            <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: calc((99 / 255) * 100%);"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =============================================
+     THREE.JS IMPORT MAP
+============================================= -->
+
+<script type="importmap">
+
+{
+    "imports": {
+
+        "three":
+        "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+
+        "three/addons/":
+        "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+
+    }
+}
+
+</script>
+
+
+<script type="module">
+
+import * as THREE
+    from "three";
+
+import {
+    OrbitControls
+}
+    from "three/addons/controls/OrbitControls.js";
+
+import {
+    GLTFLoader
+}
+    from "three/addons/loaders/GLTFLoader.js";
+
+
+// =================================================
+// ELEMENT
+// =================================================
+
+const canvas =
+    document.getElementById("viewer");
+
+const loading =
+    document.getElementById("loading");
+
+const loadingText =
+    document.getElementById("loadingText");
+
+const errorBox =
+    document.getElementById("error");
+
+const errorText =
+    document.getElementById("errorText");
+
+const cardCollectionButton =
+    document.getElementById("cardCollectionButton");
+
+const soundButton =
+    document.getElementById("soundButton");
+
+// =================================================
+// AUDIO
+// =================================================
+
+// ---------------------------------------------
+// YVELTAL CRY
+// ---------------------------------------------
+
+const yveltalCry =
+    new Audio("yveltal.mp3");
+
+yveltalCry.preload = "auto";
+
+
+// ---------------------------------------------
+// MUSIK UTAMA WEBSITE
+// ---------------------------------------------
+
+const mainMusic =
+    new Audio("musik.mp3");
+
+mainMusic.preload = "auto";
+
+// Musik akan mengulang otomatis
+mainMusic.loop = true;
+
+// Volume normal musik utama
+const MAIN_MUSIC_VOLUME = 0.5;
+
+// Volume musik ketika Yveltal Cry dimainkan
+const DUCKED_MUSIC_VOLUME = 0.18;
+
+// Set volume awal
+mainMusic.volume =
+    MAIN_MUSIC_VOLUME;
+
+
+// =================================================
+// MULAI MUSIK UTAMA
+// =================================================
+
+function startMainMusic() {
+
+    mainMusic.play()
+        .then(() => {
+
+            console.log(
+                "Musik utama berhasil dimainkan."
+            );
+
+        })
+        .catch(error => {
+
+            console.log(
+                "Autoplay diblokir browser."
+            );
+
+            console.log(
+                "Musik akan dimulai setelah interaksi pengguna."
+            );
+
+        });
+
+}
+
+
+// =================================================
+// COBA MAIN OTOMATIS SAAT WEBSITE DIBUKA
+// =================================================
+
+startMainMusic();
+
+
+// =================================================
+// FALLBACK AUTOPLAY
+// =================================================
+//
+// Jika browser memblokir autoplay,
+// musik akan mulai setelah pengguna
+// melakukan klik/tap pertama kali.
+//
+// Ini bukan tombol Yveltal Cry.
+// Klik di mana saja pada website akan
+// memulai musik utama.
+//
+
+function startMusicAfterInteraction() {
+
+    if (mainMusic.paused) {
+
+        mainMusic.play()
+            .then(() => {
+
+                console.log(
+                    "Musik utama dimulai setelah interaksi pengguna."
+                );
+
+                document.removeEventListener(
+                    "click",
+                    startMusicAfterInteraction
+                );
+
+                document.removeEventListener(
+                    "touchstart",
+                    startMusicAfterInteraction
+                );
+
+            })
+            .catch(error => {
+
+                console.warn(
+                    "Musik masih belum dapat dimainkan:",
+                    error
+                );
+
+            });
+
+    }
+
+}
+
+
+
+
+document.addEventListener(
+    "click",
+    startMusicAfterInteraction
+);
+
+document.addEventListener(
+    "touchstart",
+    startMusicAfterInteraction
+);
+
+
+// =================================================
+// YVELTAL CRY
+// =================================================
+
+function playYveltalCry() {
+
+    // ---------------------------------------------
+    // MULAI MUSIK UTAMA JIKA BELUM BERJALAN
+    // ---------------------------------------------
+
+    if (mainMusic.paused) {
+
+        mainMusic.play()
+            .catch(error => {
+
+                console.warn(
+                    "Musik utama belum dapat dimainkan:",
+                    error
+                );
+
+            });
+
+    }
+
+
+    // ---------------------------------------------
+    // KECILKAN VOLUME MUSIK UTAMA
+    // ---------------------------------------------
+
+    mainMusic.volume =
+        DUCKED_MUSIC_VOLUME;
+
+
+    // ---------------------------------------------
+    // HENTIKAN YVELTAL CRY SEBELUMNYA
+    // ---------------------------------------------
+
+    yveltalCry.pause();
+
+    yveltalCry.currentTime = 0;
+
+
+    // ---------------------------------------------
+    // MAINkan YVELTAL CRY
+    // ---------------------------------------------
+
+    yveltalCry.play()
+        .then(() => {
+
+            console.log(
+                "Yveltal Cry dimainkan."
+            );
+
+        })
+        .catch(error => {
+
+            console.warn(
+                "Audio Yveltal tidak dapat dimainkan:",
+                error
+            );
+
+        });
+
+
+    // ---------------------------------------------
+    // AKTIFKAN EFEK TOMBOL
+    // ---------------------------------------------
+
+    soundButton.classList.add(
+        "active"
+    );
+
+
+    // ---------------------------------------------
+    // AKTIFKAN EFEK VISUAL
+    // ---------------------------------------------
+
+    canvas.classList.add(
+        "roar-effect"
+    );
+
+
+    // ---------------------------------------------
+    // SETELAH 2 DETIK
+    // KEMBALIKAN MUSIK
+    // ---------------------------------------------
+
+    setTimeout(() => {
+
+        // Hentikan Yveltal Cry
+        yveltalCry.pause();
+
+        yveltalCry.currentTime = 0;
+
+
+        // Kembalikan volume musik utama
+        mainMusic.volume =
+            MAIN_MUSIC_VOLUME;
+
+
+        // Matikan efek tombol
+        soundButton.classList.remove(
+            "active"
+        );
+
+
+        // Matikan efek visual
+        canvas.classList.remove(
+            "roar-effect"
+        );
+
+
+    }, 2000);
+
+}
+
+
+// =================================================
+// EVENT BUTTON YVELTAL CRY
+// =================================================
+
+soundButton.addEventListener(
+    "click",
+    playYveltalCry
+);
+
+// =================================================
+// MY CARD COLLECTION
+// =================================================
+
+cardCollectionButton.addEventListener(
+    "click",
+    function () {
+
+        window.location.href = "card.html";
+
+    }
+);
+// =================================================
+// SCENE
+// =================================================
+
+const scene =
+    new THREE.Scene();
+
+scene.background =
+    new THREE.Color(0x090b12);
+
+
+// =================================================
+// CAMERA
+// =================================================
+
+const camera =
+    new THREE.PerspectiveCamera(
+        35,
+        window.innerWidth /
+        window.innerHeight,
+        0.01,
+        1000
+    );
+
+camera.position.set(
+    0,
+    1,
+    5
+);
+
+
+// =================================================
+// RENDERER
+// =================================================
+
+const renderer =
+    new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true
+    });
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
+renderer.toneMappingExposure =
+    1.15;
+
+renderer.shadowMap.enabled =
+    true;
+
+renderer.shadowMap.type =
+    THREE.PCFSoftShadowMap;
+
+
+// =================================================
+// LIGHT
+// =================================================
+
+const ambientLight =
+    new THREE.HemisphereLight(
+        0xffffff,
+        0x15151c,
+        2
+    );
+
+scene.add(ambientLight);
+
+
+const keyLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        4
+    );
+
+keyLight.position.set(
+    5,
+    8,
+    5
+);
+
+keyLight.castShadow =
+    true;
+
+scene.add(keyLight);
+
+
+const fillLight =
+    new THREE.DirectionalLight(
+        0x788cff,
+        2
+    );
+
+fillLight.position.set(
+    -5,
+    3,
+    4
+);
+
+scene.add(fillLight);
+
+
+const rimLight =
+    new THREE.DirectionalLight(
+        0xff385a,
+        3
+    );
+
+rimLight.position.set(
+    3,
+    5,
+    -6
+);
+
+scene.add(rimLight);
+
+
+// =================================================
+// GROUND
+// =================================================
+
+const ground =
+    new THREE.Mesh(
+
+        new THREE.CircleGeometry(
+            4,
+            96
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color: 0x11141c,
+
+            roughness: 0.9,
+
+            metalness: 0.05
+
+        })
+
+    );
+
+
+ground.rotation.x =
+    -Math.PI / 2;
+
+ground.position.y =
+    -1.25;
+
+ground.receiveShadow =
+    true;
+
+scene.add(ground);
+
+
+// =================================================
+// GLOW RING
+// =================================================
+
+const glowRing =
+    new THREE.Mesh(
+
+        new THREE.RingGeometry(
+            1.4,
+            1.48,
+            96
+        ),
+
+        new THREE.MeshBasicMaterial({
+
+            color: 0xe73858,
+
+            transparent: true,
+
+            opacity: 0.35,
+
+            side: THREE.DoubleSide
+
+        })
+
+    );
+
+glowRing.rotation.x =
+    -Math.PI / 2;
+
+glowRing.position.y =
+    -1.23;
+
+scene.add(glowRing);
+
+
+// =================================================
+// ORBIT CONTROLS
+// =================================================
+
+const controls =
+    new OrbitControls(
+        camera,
+        renderer.domElement
+    );
+
+controls.enableDamping =
+    true;
+
+controls.dampingFactor =
+    0.055;
+
+controls.enableZoom =
+    true;
+
+controls.enablePan =
+    true;
+
+controls.minDistance =
+    1.3;
+
+controls.maxDistance =
+    15;
+
+controls.autoRotate =
+    true;
+
+controls.autoRotateSpeed =
+    1.2;
+
+controls.target.set(
+    0,
+    0,
+    0
+);
+
+
+// =================================================
+// MODEL
+// =================================================
+
+let yveltal = null;
+
+let originalCameraPosition =
+    new THREE.Vector3();
+
+let originalTarget =
+    new THREE.Vector3();
+
+
+// =================================================
+// GLTF LOADER
+// =================================================
+
+const loader =
+    new GLTFLoader();
+
+
+loader.load(
+
+    "yveltal.glb",
+
+
+    // =============================================
+    // SUCCESS
+    // =============================================
+
+    function(gltf) {
+
+        console.log(
+            "Yveltal berhasil dimuat:",
+            gltf
+        );
+
+
+        yveltal =
+            gltf.scene;
+        
+        // =============================================
+        // TAMPILKAN HIERARKI BONE YVELTAL
+        // =============================================
+
+        console.log("");
+        console.log("=========================================");
+        console.log("       HIERARKI BONE YVELTAL");
+        console.log("=========================================");
+
+
+        // ---------------------------------------------
+        // FUNGSI MENAMPILKAN HIERARKI BONE
+        // ---------------------------------------------
+
+        function printBoneHierarchy(object, prefix = "", isLast = true) {
+
+            // Hanya proses bone
+            if (!object.isBone) {
+                return;
+            }
+
+            // Simbol tree
+            const connector = isLast
+                ? "└── "
+                : "├── ";
+
+            console.log(
+                prefix +
+                connector +
+                object.name
+            );
+
+
+            // Cari semua child yang merupakan bone
+            const boneChildren = object.children.filter(
+                child => child.isBone
+            );
+
+
+            // Tampilkan child secara rekursif
+            boneChildren.forEach(
+                (child, index) => {
+
+                    const last =
+                        index === boneChildren.length - 1;
+
+                    const newPrefix =
+                        prefix +
+                        (isLast ? "    " : "│   ");
+
+                    printBoneHierarchy(
+                        child,
+                        newPrefix,
+                        last
+                    );
+                }
+            );
+        }
+
+
+        // ---------------------------------------------
+        // CARI ROOT BONE
+        // ---------------------------------------------
+
+        const rootBones = [];
+
+        yveltal.traverse(
+            function(object) {
+
+                if (
+                    object.isBone &&
+                    (!object.parent || !object.parent.isBone)
+                ) {
+
+                    rootBones.push(object);
+
+                }
+
+            }
+        );
+
+
+        // ---------------------------------------------
+        // CETAK SEMUA ROOT BONE
+        // ---------------------------------------------
+
+        rootBones.forEach(
+            function(rootBone, index) {
+
+                console.log(
+                    "ROOT BONE:",
+                    rootBone.name
+                );
+
+                printBoneHierarchy(
+                    rootBone
+                );
+
+                console.log("");
+            }
+        );
+
+
+        // =============================================
+        // DAFTAR BONE LENGKAP
+        // =============================================
+
+        console.log("");
+        console.log("=========================================");
+        console.log("          DAFTAR SEMUA BONE");
+        console.log("=========================================");
+
+        let boneNumber = 0;
+
+        yveltal.traverse(
+            function(object) {
+
+                if (object.isBone) {
+
+                    boneNumber++;
+
+                    console.log(
+                        boneNumber +
+                        ". " +
+                        object.name
+                    );
+
+                }
+
+            }
+        );
+
+        console.log("");
+        console.log(
+            "TOTAL BONE:",
+            boneNumber
+        );
+        console.log("=========================================");
+
+        // =============================================
+        // DAFTAR SEMUA MESH YVELTAL
+        // =============================================
+
+        console.log("");
+        console.log("=========================================");
+        console.log("           DAFTAR SEMUA MESH");
+        console.log("=========================================");
+
+        let meshNumber = 0;
+
+        yveltal.traverse(function(object) {
+
+            if (object.isMesh) {
+
+                meshNumber++;
+
+                console.log(
+                    meshNumber + ". " + object.name
+                );
+
+                console.log(
+                    "   ├─ Type:",
+                    object.type
+                );
+
+                console.log(
+                    "   ├─ Geometry:",
+                    object.geometry
+                        ? object.geometry.type
+                        : "Tidak ada"
+                );
+
+                if (object.material) {
+
+                    if (Array.isArray(object.material)) {
+
+                        console.log(
+                            "   ├─ Material:",
+                            object.material
+                                .map(m => m.name)
+                                .join(", ")
+                        );
+
+                    } else {
+
+                        console.log(
+                            "   ├─ Material:",
+                            object.material.name
+                        );
+
+                    }
+                }
+
+                console.log(
+                    "   └─ Visible:",
+                    object.visible
+                );
+
+                // Shadow
+                object.castShadow = true;
+                object.receiveShadow = true;
+
+                // Material update
+                if (object.material) {
+
+                    if (Array.isArray(object.material)) {
+
+                        object.material.forEach(
+                            material => {
+                                material.needsUpdate = true;
+                            }
+                        );
+
+                    } else {
+
+                        object.material.needsUpdate = true;
+
+                    }
+                }
+            }
+        });
+
+        console.log("");
+        console.log(
+            "TOTAL MESH:",
+            meshNumber
+        );
+
+        console.log("=========================================");
+
+
+        // -----------------------------------------
+        // HITUNG UKURAN MODEL
+        // -----------------------------------------
+
+        const box =
+            new THREE.Box3()
+                .setFromObject(yveltal);
+
+
+        const size =
+            box.getSize(
+                new THREE.Vector3()
+            );
+
+
+        const center =
+            box.getCenter(
+                new THREE.Vector3()
+            );
+
+
+        // -----------------------------------------
+        // CENTER MODEL
+        // -----------------------------------------
+
+        yveltal.position.sub(
+            center
+        );
+
+
+        // -----------------------------------------
+        // SCALE MODEL
+        // -----------------------------------------
+
+        const largest =
+            Math.max(
+                size.x,
+                size.y,
+                size.z
+            );
+
+
+        const targetSize =
+            3.2;
+
+
+        const scale =
+            targetSize /
+            largest;
+
+
+        yveltal.scale.setScalar(
+            scale
+        );
+
+
+        // -----------------------------------------
+        // TAMBAHKAN KE SCENE
+        // -----------------------------------------
+
+        scene.add(
+            yveltal
+        );
+
+
+        // -----------------------------------------
+        // HITUNG ULANG BOUNDING BOX
+        // -----------------------------------------
+
+        const finalBox =
+            new THREE.Box3()
+                .setFromObject(yveltal);
+
+
+        const finalSize =
+            finalBox.getSize(
+                new THREE.Vector3()
+            );
+
+
+        const finalCenter =
+            finalBox.getCenter(
+                new THREE.Vector3()
+            );
+
+
+        // -----------------------------------------
+        // POSISI YVELTAL
+        // -----------------------------------------
+
+        yveltal.position.y -=
+            finalCenter.y;
+
+
+        yveltal.position.y +=
+            0.05;
+
+
+        // -----------------------------------------
+        // CAMERA
+        // -----------------------------------------
+
+        const maxDimension =
+            Math.max(
+                finalSize.x,
+                finalSize.y,
+                finalSize.z
+            );
+
+
+        const distance =
+            Math.max(
+                3.8,
+                maxDimension * 1.65
+            );
+
+
+        camera.position.set(
+            distance * 0.8,
+            maxDimension * 0.35,
+            distance
+        );
+
+
+        controls.target.set(
+            0,
+            0,
+            0
+        );
+
+
+        controls.update();
+
+
+        // -----------------------------------------
+        // SIMPAN VIEW AWAL
+        // -----------------------------------------
+
+        originalCameraPosition.copy(
+            camera.position
+        );
+
+
+        originalTarget.copy(
+            controls.target
+        );
+
+
+        // -----------------------------------------
+        // HILANGKAN LOADING
+        // -----------------------------------------
+
+        loading.classList.add(
+            "hide"
+        );
+
+    },
+
+
+    // =============================================
+    // PROGRESS
+    // =============================================
+
+    function(xhr) {
+
+        if (xhr.total > 0) {
+
+            const percent =
+                Math.round(
+                    xhr.loaded /
+                    xhr.total *
+                    100
+                );
+
+
+            loadingText.textContent =
+                "Loading Yveltal... "
+                + percent
+                + "%";
+
+        }
+
+    },
+
+
+    // =============================================
+    // ERROR
+    // =============================================
+
+    function(error) {
+
+        console.error(
+            "Gagal memuat yveltal.glb:",
+            error
+        );
+
+
+        loading.classList.add(
+            "hide"
+        );
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorText.innerHTML = `
+
+            File <b>yveltal.glb</b>
+            tidak dapat dimuat.
+
+            <br><br>
+
+            Pastikan struktur folder:
+
+            <br><br>
+
+            <b>
+            pokey.html<br>
+            yveltal.glb
+            </b>
+
+            <br><br>
+
+            Kemudian jalankan menggunakan
+            <b>Live Server</b> atau local server.
+
+        `;
+
+    }
+
+);
+
+
+// =================================================
+// WINDOW RESIZE
+// =================================================
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+
+        renderer.setPixelRatio(
+            Math.min(
+                window.devicePixelRatio,
+                2
+            )
+        );
+
+    }
+);
+
+
+// =================================================
+// ANIMATION
+// =================================================
+
+const clock =
+    new THREE.Clock();
+
+
+function animate() {
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    const elapsed =
+        clock.getElapsedTime();
+
+
+    // Efek floating sangat kecil
+    if (yveltal) {
+
+        yveltal.rotation.z =
+            Math.sin(
+                elapsed * 0.7
+            ) * 0.015;
+
+    }
+
+
+    // Animasi ring
+    glowRing.rotation.z =
+        elapsed * 0.15;
+
+
+    controls.update();
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+</script>
+
+</body>
+</html>
