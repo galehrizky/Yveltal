@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>POKEY | Yveltal 3D</title>
+    <title>Pokémon | Yveltal</title>
 
     <style>
         * {
@@ -590,6 +590,48 @@
                 align-items: flex-start;
             }
 
+            #cinematicIntro .intro-small {
+
+                font-size: 8px;
+            
+                letter-spacing: 4px;
+            
+            }
+            
+            
+            #cinematicIntro .intro-title {
+            
+                letter-spacing: 7px;
+            
+            }
+            
+            
+            #cinematicIntro .intro-number {
+            
+                font-size: 10px;
+            
+                letter-spacing: 5px;
+            
+            }
+            
+            
+            #cinematicIntro .intro-subtitle {
+            
+                font-size: 8px;
+            
+                letter-spacing: 3px;
+            
+            }
+            
+            
+            .intro-skip {
+            
+                bottom: 25px;
+            
+                font-size: 8px;
+            
+            }
+
             .brand small {
                 font-size: 8px;
                 letter-spacing: 3px;
@@ -955,6 +997,460 @@
 
         }
 
+        /* =========================================
+   CINEMATIC INTRO
+========================================= */
+
+#cinematicIntro {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 40;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(90, 8, 25, 0.15),
+            rgba(3, 4, 7, 0.96) 75%
+        );
+
+    opacity: 1;
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+
+    pointer-events: auto;
+}
+
+
+/* INTRO HILANG */
+
+#cinematicIntro.hide {
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   VIGNETTE
+========================================= */
+
+.intro-vignette {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(0,0,0,0.45) 70%,
+            rgba(0,0,0,0.95) 100%
+        );
+
+}
+
+
+/* =========================================
+   FLASH EFFECT
+========================================= */
+
+.intro-flash {
+    position: absolute;
+
+    inset: 0;
+
+    background: #ffffff;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.intro-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    transform:
+        translateY(20px);
+
+    opacity: 0;
+
+}
+
+
+.intro-small {
+
+    color: #aeb5c2;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.intro-line {
+
+    width: 0;
+
+    height: 1px;
+
+    margin:
+
+        0 auto
+        20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #e73858,
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 15px
+        rgba(231,56,88,0.8);
+
+}
+
+
+.intro-title {
+
+    font-size:
+
+        clamp(
+            60px,
+            13vw,
+            180px
+        );
+
+    font-weight: 900;
+
+    letter-spacing: 15px;
+
+    color: #f2f3f5;
+
+    text-shadow:
+
+        0 0 20px
+        rgba(255,255,255,0.15),
+
+        0 0 60px
+        rgba(231,56,88,0.2);
+
+}
+
+
+.intro-number {
+
+    margin-top: 12px;
+
+    color: #e73858;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 8px;
+
+}
+
+
+.intro-subtitle {
+
+    margin-top: 20px;
+
+    color: #9ba3b2;
+
+    font-size: 10px;
+
+    letter-spacing: 5px;
+
+}
+
+
+/* =========================================
+   SKIP TEXT
+========================================= */
+
+.intro-skip {
+
+    position: absolute;
+
+    z-index: 3;
+
+    bottom: 35px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color:
+        rgba(255,255,255,0.35);
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    animation:
+        skipPulse
+        1.8s
+        infinite;
+
+}
+
+
+@keyframes skipPulse {
+
+    0%,
+    100% {
+
+        opacity: 0.25;
+
+    }
+
+    50% {
+
+        opacity: 0.8;
+
+    }
+
+}
+
+
+/* =========================================
+   CINEMATIC ANIMATION
+========================================= */
+
+#cinematicIntro.play
+.intro-content {
+
+    animation:
+
+        cinematicText
+        3.8s
+        cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        )
+        forwards;
+
+}
+
+
+#cinematicIntro.play
+.intro-line {
+
+    animation:
+
+        cinematicLine
+        1.5s
+        ease
+        0.5s
+        forwards;
+
+}
+
+
+#cinematicIntro.play
+.intro-flash {
+
+    animation:
+
+        cinematicFlash
+        0.8s
+        ease
+        3.2s
+        forwards;
+
+}
+
+
+@keyframes cinematicText {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(35px)
+            scale(0.96);
+
+        filter:
+            blur(12px);
+
+    }
+
+    25% {
+
+        opacity: 1;
+
+        filter:
+            blur(0);
+
+    }
+
+    70% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-25px)
+            scale(1.04);
+
+        filter:
+            blur(6px);
+
+    }
+
+}
+
+
+@keyframes cinematicLine {
+
+    0% {
+
+        width: 0;
+
+        opacity: 0;
+
+    }
+
+    100% {
+
+        width: 220px;
+
+        opacity: 1;
+
+    }
+
+}
+
+
+@keyframes cinematicFlash {
+
+    0% {
+
+        opacity: 0;
+
+    }
+
+    30% {
+
+        opacity: 0.65;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =========================================
+   HIDE UI SAAT INTRO
+========================================= */
+
+.topbar,
+.info-panel,
+.stats-panel,
+.sound-button {
+
+    transition:
+
+        opacity 1s ease,
+        transform 1s ease;
+
+}
+
+
+body.intro-active .topbar {
+
+    opacity: 0;
+
+    transform:
+        translateY(-30px);
+
+}
+
+
+body.intro-active .info-panel {
+
+    opacity: 0;
+
+    transform:
+        translateX(-40px);
+
+}
+
+
+body.intro-active .stats-panel {
+
+    opacity: 0;
+
+    transform:
+        translateX(40px);
+
+}
+
+
+body.intro-active .sound-button {
+
+    opacity: 0;
+
+    transform:
+        translateY(-20px);
+
+}
+
     </style>
 </head>
 
@@ -967,6 +1463,44 @@
     ========================================== -->
 
     <canvas id="viewer"></canvas>
+
+    <!-- =========================================
+     CINEMATIC INTRO
+    ========================================== -->
+    
+    <div id="cinematicIntro">
+    
+        <div class="intro-vignette"></div>
+    
+        <div class="intro-flash"></div>
+    
+        <div class="intro-content">
+    
+            <div class="intro-small">
+                THE LEGENDARY POKÉMON
+            </div>
+    
+            <div class="intro-line"></div>
+    
+            <h1 class="intro-title">
+                YVELTAL
+            </h1>
+    
+            <div class="intro-number">
+                #0717
+            </div>
+    
+            <p class="intro-subtitle">
+                THE DESTRUCTION POKÉMON
+            </p>
+    
+        </div>
+    
+        <div class="intro-skip">
+            CLICK TO SKIP
+        </div>
+    
+    </div>
 
 
     <!-- =========================================
@@ -1211,6 +1745,9 @@ const cardCollectionButton =
 
 const soundButton =
     document.getElementById("soundButton");
+
+const cinematicIntro =
+    document.getElementById("cinematicIntro");
 
 // =================================================
 // AUDIO
@@ -1742,6 +2279,30 @@ let originalCameraPosition =
 let originalTarget =
     new THREE.Vector3();
 
+// =================================================
+// CINEMATIC INTRO SYSTEM
+// =================================================
+
+let introStarted = false;
+
+let introFinished = false;
+
+let introStartTime = 0;
+
+
+// Camera position cinematic
+const introCameraStart =
+    new THREE.Vector3();
+
+const introCameraEnd =
+    new THREE.Vector3();
+
+const introTargetStart =
+    new THREE.Vector3();
+
+const introTargetEnd =
+    new THREE.Vector3();
+
 
 // =================================================
 // GLTF LOADER
@@ -2137,17 +2698,76 @@ loader.load(
 
 
         // -----------------------------------------
-        // SIMPAN VIEW AWAL
-        // -----------------------------------------
+// SIMPAN VIEW AKHIR
+// -----------------------------------------
 
-        originalCameraPosition.copy(
-            camera.position
-        );
+originalCameraPosition.copy(
+    camera.position
+);
+
+originalTarget.copy(
+    controls.target
+);
 
 
-        originalTarget.copy(
-            controls.target
-        );
+
+// =============================================
+// SETUP CINEMATIC CAMERA
+// =============================================
+
+
+// Posisi akhir cinematic
+introCameraEnd.copy(
+    camera.position
+);
+
+introTargetEnd.copy(
+    controls.target
+);
+
+
+// Posisi awal kamera
+introCameraStart.set(
+
+    distance * 2.4,
+
+    maxDimension * 0.7,
+
+    distance * 2.8
+
+);
+
+
+// Target awal sedikit lebih tinggi
+introTargetStart.set(
+
+    0,
+
+    maxDimension * 0.2,
+
+    0
+
+);
+
+
+// Kamera mulai dari jauh
+camera.position.copy(
+    introCameraStart
+);
+
+
+// Set target awal
+controls.target.copy(
+    introTargetStart
+);
+
+
+// Matikan orbit sementara
+controls.enabled = false;
+
+controls.autoRotate = false;
+
+controls.update();
 
 
         // -----------------------------------------
@@ -2157,6 +2777,12 @@ loader.load(
         loading.classList.add(
             "hide"
         );
+
+        // Mulai cinematic setelah loading hilang
+        setTimeout(
+            startCinematicIntro,
+            600
+);
 
     },
 
@@ -2235,6 +2861,94 @@ loader.load(
 
 );
 
+// =================================================
+// START CINEMATIC INTRO
+// =================================================
+
+function startCinematicIntro() {
+
+    if (introStarted) {
+        return;
+    }
+
+    introStarted = true;
+
+    document.body.classList.add(
+        "intro-active"
+    );
+
+
+    cinematicIntro.classList.add(
+        "play"
+    );
+
+
+    // Nonaktifkan kontrol user
+    controls.enabled = false;
+
+    controls.autoRotate = false;
+
+
+    // Mulai timer cinematic
+    introStartTime =
+        performance.now();
+
+}
+
+
+
+// =================================================
+// FINISH CINEMATIC INTRO
+// =================================================
+
+function finishCinematicIntro() {
+
+    if (introFinished) {
+        return;
+    }
+
+    introFinished = true;
+
+
+    cinematicIntro.classList.add(
+        "hide"
+    );
+
+
+    document.body.classList.remove(
+        "intro-active"
+    );
+
+
+    // Aktifkan kembali kontrol
+    controls.enabled = true;
+
+    controls.autoRotate = true;
+
+
+    // Pastikan posisi akhir tepat
+    camera.position.copy(
+        introCameraEnd
+    );
+
+    controls.target.copy(
+        introTargetEnd
+    );
+
+    controls.update();
+
+}
+
+
+
+// =================================================
+// SKIP CINEMATIC INTRO
+// =================================================
+
+cinematicIntro.addEventListener(
+    "click",
+    finishCinematicIntro
+);
 
 // =================================================
 // WINDOW RESIZE
@@ -2276,6 +2990,23 @@ window.addEventListener(
 const clock =
     new THREE.Clock();
 
+// =================================================
+// CINEMATIC EASING
+// =================================================
+
+function easeInOutCinematic(t) {
+
+    return t < 0.5
+
+        ? 4 * t * t * t
+
+        : 1 -
+            Math.pow(
+                -2 * t + 2,
+                3
+            ) / 2;
+
+}
 
 function animate() {
 
@@ -2288,15 +3019,135 @@ function animate() {
         clock.getElapsedTime();
 
 
-    // Efek floating sangat kecil
-    if (yveltal) {
+    // =================================================
+// YVELTAL ANIMATION
+// =================================================
 
+if (yveltal) {
+
+    // Floating normal
+    const floatAmount =
+        Math.sin(
+            elapsed * 0.7
+        ) * 0.015;
+
+
+    // =============================================
+    // CINEMATIC CAMERA
+    // =============================================
+
+    if (
+        introStarted &&
+        !introFinished
+    ) {
+
+        const introDuration =
+            4200;
+
+
+        const currentTime =
+            performance.now();
+
+
+        let progress =
+
+            (
+                currentTime -
+                introStartTime
+            )
+            /
+            introDuration;
+
+
+        progress =
+            Math.min(
+                progress,
+                1
+            );
+
+
+        const easedProgress =
+            easeInOutCinematic(
+                progress
+            );
+
+
+        // -----------------------------------------
+        // CAMERA MOVEMENT
+        // -----------------------------------------
+
+        camera.position.lerpVectors(
+
+            introCameraStart,
+
+            introCameraEnd,
+
+            easedProgress
+
+        );
+
+
+        // -----------------------------------------
+        // CAMERA TARGET
+        // -----------------------------------------
+
+        controls.target.lerpVectors(
+
+            introTargetStart,
+
+            introTargetEnd,
+
+            easedProgress
+
+        );
+
+
+        // -----------------------------------------
+        // YVELTAL REVEAL ROTATION
+        // -----------------------------------------
+
+        yveltal.rotation.y =
+
+            (1 - easedProgress)
+            * 0.9;
+
+
+        // Sedikit miring saat awal
         yveltal.rotation.z =
+
             Math.sin(
-                elapsed * 0.7
-            ) * 0.015;
+                progress * Math.PI
+            )
+            * 0.08;
+
+
+        // -----------------------------------------
+        // SELESAI INTRO
+        // -----------------------------------------
+
+        if (
+            progress >= 1
+        ) {
+
+            finishCinematicIntro();
+
+        }
 
     }
+
+
+    // =============================================
+    // NORMAL ANIMATION
+    // =============================================
+
+    else {
+
+        yveltal.rotation.z =
+            floatAmount;
+
+    }
+
+}
 
 
     // Animasi ring
