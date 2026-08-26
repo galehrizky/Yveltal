@@ -549,6 +549,320 @@
             color: #ffffff;
         }
 
+        /* =====================================================
+           SEARCH & FILTER
+        ===================================================== */
+        
+        .search-filter-container {
+        
+            position: relative;
+        
+            z-index: 10;
+        
+            display: grid;
+        
+            grid-template-columns:
+                minmax(220px, 1fr)
+                180px
+                180px;
+        
+            gap: 12px;
+        
+            width: 100%;
+        
+            max-width: 1700px;
+        
+            margin: 22px auto 10px;
+        
+        }
+        
+        
+        /* =========================
+           SEARCH BOX
+        ========================= */
+        
+        .search-box {
+        
+            position: relative;
+        
+            display: flex;
+        
+            align-items: center;
+        
+            width: 100%;
+        
+        }
+        
+        
+        .search-box input {
+        
+            width: 100%;
+        
+            height: 48px;
+        
+            padding:
+                0 45px
+                0 45px;
+        
+            border-radius: 12px;
+        
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+        
+            outline: none;
+        
+            background:
+                rgba(255,255,255,0.06);
+        
+            backdrop-filter: blur(12px);
+        
+            color: #ffffff;
+        
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        
+            font-size: 13px;
+        
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        
+        }
+        
+        
+        .search-box input::placeholder {
+        
+            color: #7f8795;
+        
+        }
+        
+        
+        .search-box input:focus {
+        
+            background:
+                rgba(255,255,255,0.08);
+        
+            border-color:
+                rgba(231,56,88,0.55);
+        
+            box-shadow:
+                0 0 25px
+                rgba(231,56,88,0.12);
+        
+        }
+        
+        
+        /* ICON SEARCH */
+        
+        .search-icon {
+        
+            position: absolute;
+        
+            left: 17px;
+        
+            z-index: 2;
+        
+            color: #ff647c;
+        
+            font-size: 20px;
+        
+            pointer-events: none;
+        
+        }
+        
+        
+        /* CLEAR BUTTON */
+        
+        .clear-search {
+        
+            position: absolute;
+        
+            right: 12px;
+        
+            width: 28px;
+        
+            height: 28px;
+        
+            display: flex;
+        
+            align-items: center;
+        
+            justify-content: center;
+        
+            border: none;
+        
+            border-radius: 50%;
+        
+            background:
+                rgba(255,255,255,0.08);
+        
+            color: #aeb5c2;
+        
+            font-size: 18px;
+        
+            cursor: pointer;
+        
+            opacity: 0;
+        
+            pointer-events: none;
+        
+            transition:
+                opacity 0.2s ease,
+                background 0.2s ease,
+                color 0.2s ease;
+        
+        }
+        
+        
+        .clear-search.show {
+        
+            opacity: 1;
+        
+            pointer-events: auto;
+        
+        }
+        
+        
+        .clear-search:hover {
+        
+            background:
+                rgba(231,56,88,0.20);
+        
+            color: #ffffff;
+        
+        }
+        
+        
+        /* =========================
+           FILTER BOX
+        ========================= */
+        
+        .filter-box {
+        
+            display: flex;
+        
+            flex-direction: column;
+        
+            justify-content: center;
+        
+            gap: 4px;
+        
+        }
+        
+        
+        .filter-box label {
+        
+            padding-left: 3px;
+        
+            color: #727b8b;
+        
+            font-size: 8px;
+        
+            font-weight: 800;
+        
+            letter-spacing: 1.5px;
+        
+        }
+        
+        
+        .filter-box select {
+        
+            width: 100%;
+        
+            height: 48px;
+        
+            padding: 0 14px;
+        
+            border-radius: 12px;
+        
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+        
+            outline: none;
+        
+            background:
+                rgba(255,255,255,0.06);
+        
+            color: #ffffff;
+        
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        
+            font-size: 11px;
+        
+            font-weight: 700;
+        
+            cursor: pointer;
+        
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease;
+        
+        }
+        
+        
+        .filter-box select:focus {
+        
+            border-color:
+                rgba(231,56,88,0.55);
+        
+        }
+        
+        
+        .filter-box select option {
+        
+            background: #10131b;
+        
+            color: #ffffff;
+        
+        }
+        
+        
+        /* =========================
+           RESULT INFORMATION
+        ========================= */
+        
+        .search-result-info {
+        
+            position: relative;
+        
+            z-index: 5;
+        
+            width: 100%;
+        
+            max-width: 1700px;
+        
+            margin: 0 auto 16px;
+        
+            color: #717989;
+        
+            font-size: 9px;
+        
+            font-weight: 700;
+        
+            letter-spacing: 0.8px;
+        
+            text-transform: uppercase;
+        
+        }
+        
+        
+        /* =========================
+           HIDDEN CARD
+        ========================= */
+        
+        .pokemon-card.search-hidden {
+        
+            display: none;
+        
+        }
 
         /* =====================================================
            CARD GRID
@@ -863,6 +1177,23 @@
         letter-spacing: 0.3px;
     }
 
+    .search-filter-container {
+
+        grid-template-columns:
+            1fr
+            1fr;
+    
+        gap: 10px;
+    
+    }
+    
+    .search-box {
+    
+        grid-column:
+            1 / -1;
+    
+    }
+
 }
 
 
@@ -982,6 +1313,54 @@
 
         line-height: 1.15;
         letter-spacing: 0.1px;
+    }
+
+    .search-filter-container {
+
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+
+    margin-top: 16px;
+
+}
+
+
+    .search-box input {
+    
+        height: 42px;
+    
+        font-size: 11px;
+    
+        padding-left: 40px;
+    
+    }
+    
+    
+    .filter-box select {
+    
+        height: 42px;
+    
+        font-size: 10px;
+    
+    }
+    
+    
+    .filter-box label {
+    
+        font-size: 7px;
+    
+    }
+    
+    
+    .search-result-info {
+    
+        margin-top: 8px;
+    
+        margin-bottom: 12px;
+    
+        font-size: 7px;
+    
     }
 
 }
@@ -1322,6 +1701,103 @@
 
         </div>
 
+        <!-- =================================================
+             SEARCH & FILTER
+        ================================================= -->
+        
+        <div class="search-filter-container">
+        
+            <!-- SEARCH -->
+            <div class="search-box">
+        
+                <span class="search-icon">⌕</span>
+        
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search card..."
+                    autocomplete="off"
+                >
+        
+                <button
+                    id="clearSearch"
+                    class="clear-search"
+                    type="button"
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+        
+            </div>
+        
+        
+            <!-- FILTER BAHASA -->
+            <div class="filter-box">
+        
+                <label for="languageFilter">
+                    LANGUAGE
+                </label>
+        
+                <select id="languageFilter">
+        
+                    <option value="all">
+                        ALL
+                    </option>
+        
+                    <option value="indonesia">
+                        INDONESIA
+                    </option>
+        
+                    <option value="english">
+                        ENGLISH
+                    </option>
+        
+                    <option value="japan">
+                        JAPAN
+                    </option>
+        
+                </select>
+        
+            </div>
+        
+        
+            <!-- FILTER STATUS -->
+            <div class="filter-box">
+        
+                <label for="statusFilter">
+                    STATUS
+                </label>
+        
+                <select id="statusFilter">
+        
+                    <option value="all">
+                        ALL CARDS
+                    </option>
+        
+                    <option value="owned">
+                        OWNED
+                    </option>
+        
+                    <option value="not-owned">
+                        NOT OWNED
+                    </option>
+        
+                </select>
+        
+            </div>
+        
+        </div>
+        
+        
+        <!-- HASIL FILTER -->
+        
+        <div
+            id="searchResultInfo"
+            class="search-result-info"
+        >
+            Showing all cards
+        </div>
+
     </section>
 
 
@@ -1332,6 +1808,7 @@
     <main
         id="cardGrid"
         class="card-grid"
+        data-language="indonesia"
     >
 
 
@@ -1718,6 +2195,7 @@
 <main
     id="englishCardGrid"
     class="card-grid"
+    data-language="english"
 >
 
     <!-- CARD 22 -->
@@ -2421,8 +2899,9 @@
 
 <main
 
-id="japanCardGrid"
-class="card-grid"
+    id="japanCardGrid"
+    class="card-grid"
+    data-language="japan"
 
     <!-- CARD 65 -->
     <div
@@ -3154,6 +3633,35 @@ class="card-grid"
             "cardProgress"
         );
 
+    // =================================================
+    // SEARCH & FILTER ELEMENT
+    // =================================================
+    
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+    
+    const languageFilter =
+        document.getElementById(
+            "languageFilter"
+        );
+    
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+    
+    const clearSearch =
+        document.getElementById(
+            "clearSearch"
+        );
+    
+    const searchResultInfo =
+        document.getElementById(
+            "searchResultInfo"
+        );
+
     const lightbox =
         document.getElementById(
             "lightbox"
@@ -3221,6 +3729,229 @@ class="card-grid"
             ownedCount + "/" + totalCount;
     }
 
+    // =================================================
+// SEARCH & FILTER
+// =================================================
+
+function applySearchAndFilter() {
+
+    const searchValue =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const selectedLanguage =
+        languageFilter.value;
+
+    const selectedStatus =
+        statusFilter.value;
+
+
+    let visibleCount = 0;
+
+
+    cards.forEach(function(card) {
+
+        // =========================================
+        // AMBIL DATA KARTU
+        // =========================================
+
+        const cardName =
+            card.querySelector(
+                ".card-name"
+            )?.textContent
+            .trim()
+            .toLowerCase() || "";
+
+        const cardTitle =
+            card.dataset.title
+            ?.toLowerCase() || "";
+
+
+        // =========================================
+        // CARI BAHASA KARTU
+        // =========================================
+
+        const parentGrid =
+            card.closest(".card-grid");
+
+        const cardLanguage =
+            parentGrid
+                ?.dataset.language
+                ?.toLowerCase() || "";
+
+
+        // =========================================
+        // CEK SEARCH
+        // =========================================
+
+        const matchesSearch =
+            searchValue === "" ||
+            cardName.includes(searchValue) ||
+            cardTitle.includes(searchValue);
+
+
+        // =========================================
+        // CEK LANGUAGE
+        // =========================================
+
+        const matchesLanguage =
+            selectedLanguage === "all" ||
+            cardLanguage === selectedLanguage;
+
+
+        // =========================================
+        // CEK STATUS
+        // =========================================
+
+        const isOwned =
+            card.classList.contains(
+                "owned"
+            );
+
+
+        let matchesStatus = true;
+
+
+        if (
+            selectedStatus === "owned"
+        ) {
+
+            matchesStatus =
+                isOwned;
+
+        }
+
+
+        if (
+            selectedStatus === "not-owned"
+        ) {
+
+            matchesStatus =
+                !isOwned;
+
+        }
+
+
+        // =========================================
+        // HASIL AKHIR
+        // =========================================
+
+        const shouldShow =
+            matchesSearch &&
+            matchesLanguage &&
+            matchesStatus;
+
+
+        if (shouldShow) {
+
+            card.classList.remove(
+                "search-hidden"
+            );
+
+            visibleCount++;
+
+        } else {
+
+            card.classList.add(
+                "search-hidden"
+            );
+
+        }
+
+    });
+
+
+    // =========================================
+    // UPDATE INFO HASIL
+    // =========================================
+
+    searchResultInfo.textContent =
+        "Showing " +
+        visibleCount +
+        " of " +
+        cards.length +
+        " cards";
+
+
+    // =========================================
+    // BUTTON CLEAR SEARCH
+    // =========================================
+
+    if (
+        searchInput.value.trim() !== ""
+    ) {
+
+        clearSearch.classList.add(
+            "show"
+        );
+
+    } else {
+
+        clearSearch.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+// =================================================
+// SEARCH INPUT
+// =================================================
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        applySearchAndFilter();
+
+    }
+);
+
+// =================================================
+// LANGUAGE FILTER
+// =================================================
+
+languageFilter.addEventListener(
+    "change",
+    function() {
+
+        applySearchAndFilter();
+
+    }
+);
+
+// =================================================
+// STATUS FILTER
+// =================================================
+
+statusFilter.addEventListener(
+    "change",
+    function() {
+
+        applySearchAndFilter();
+
+    }
+);
+
+// =================================================
+// CLEAR SEARCH
+// =================================================
+
+clearSearch.addEventListener(
+    "click",
+    function() {
+
+        searchInput.value = "";
+
+        applySearchAndFilter();
+
+        searchInput.focus();
+
+    }
+);
+
 
 // =================================================
 // APPLY SAVED STATUS
@@ -3239,7 +3970,18 @@ cards.forEach(function(card) {
 
 });
 
+// =====================================
+// UPDATE PROGRESS
+// =====================================
+
 updateProgress();
+
+
+// =====================================
+// UPDATE SEARCH & FILTER
+// =====================================
+
+applySearchAndFilter();
 
 // =================================================
 // DOUBLE CLICK CARD
