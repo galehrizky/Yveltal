@@ -553,23 +553,23 @@
            SEARCH & FILTER
         ===================================================== */
         
-        .search-filter-container {
-        
+       .search-filter-container {
+
             position: relative;
-        
             z-index: 10;
         
             display: grid;
         
             grid-template-columns:
-                minmax(220px, 1fr)
+                minmax(250px, 1fr)
                 180px
                 180px;
+        
+            align-items: end;
         
             gap: 12px;
         
             width: 100%;
-        
             max-width: 1700px;
         
             margin: 22px auto 10px;
@@ -747,10 +747,14 @@
         
             flex-direction: column;
         
-            justify-content: center;
+            justify-content: flex-start;
         
             gap: 4px;
         
+        }
+
+        .search-filter-box {
+            width: 100%;
         }
         
         
@@ -1187,7 +1191,7 @@
     
     }
     
-    .search-box {
+    .search-filter-box {
     
         grid-column:
             1 / -1;
@@ -1707,29 +1711,39 @@
         
         <div class="search-filter-container">
         
-            <!-- SEARCH -->
-            <div class="search-box">
-        
-                <span class="search-icon">⌕</span>
-        
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search card..."
-                    autocomplete="off"
-                >
-        
-                <button
-                    id="clearSearch"
-                    class="clear-search"
-                    type="button"
-                    aria-label="Clear search"
-                >
-                    ×
-                </button>
-        
+           <!-- SEARCH -->
+            <div class="filter-box search-filter-box">
+            
+                <label for="searchInput">
+                    SEARCH
+                </label>
+            
+                <div class="search-box">
+            
+                    <span class="search-icon">
+                        ⌕
+                    </span>
+            
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search card..."
+                        autocomplete="off"
+                    >
+            
+                    <button
+                        id="clearSearch"
+                        class="clear-search"
+                        type="button"
+                        aria-label="Clear search"
+                    >
+                        ×
+                    </button>
+            
+                </div>
+            
             </div>
-        
+                    
         
             <!-- FILTER BAHASA -->
             <div class="filter-box">
@@ -2902,7 +2916,7 @@
     id="japanCardGrid"
     class="card-grid"
     data-language="japan"
-
+>
     <!-- CARD 65 -->
     <div
         class="pokemon-card"
