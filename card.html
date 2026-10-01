@@ -1606,158 +1606,496 @@
 }
 
     
-/* ===== PURCHASE TABLE ===== */
-.purchase-section{
-  width: min(1200px, 94%);
-  margin: 40px auto 28px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.08);
-}
-.purchase-section h2{
-  margin: 0 0 18px;
-  font-size: 1.35rem;
-}
-.purchase-table-wrap{
-  overflow-x: auto;
-}
-.purchase-table{
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 650px;
-}
-.purchase-table th,
-.purchase-table td{
-  padding: 12px 14px;
-  border-bottom: 1px solid #e8e8e8;
-  text-align: left;
-}
-.purchase-table th{
-  background: #f5f5f5;
-  font-weight: 700;
-}
-.purchase-table td.price{
-  text-align: right;
-  white-space: nowrap;
-}
-.purchase-empty{
-  text-align: center !important;
-  color: #888;
-  padding: 25px !important;
-}
-.purchase-total{
-  margin-top: 18px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 14px;
-  font-size: 1.05rem;
-}
-.purchase-total strong{
-  font-size: 1.3rem;
+/* =========================================================
+   PURCHASE TABLE
+   Mengikuti tema website: dark / red accent
+========================================================= */
+
+.purchase-section {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    max-width: 1700px;
+
+    margin: 0 auto 45px;
+
+    padding: clamp(18px, 2vw, 30px);
+
+    box-sizing: border-box;
+
+    background: #10131b;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.35);
 }
 
-/* ===== PURCHASE MODAL ===== */
-.purchase-modal{
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(0,0,0,.55);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.purchase-modal.show{
-  display: flex;
-}
-.purchase-modal-box{
-  width: min(460px, 100%);
-  background: #fff;
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-  animation: purchaseModalIn .18s ease-out;
-}
-@keyframes purchaseModalIn{
-  from{opacity:0; transform:translateY(10px) scale(.98)}
-  to{opacity:1; transform:translateY(0) scale(1)}
-}
-.purchase-modal-title{
-  margin: 0 0 5px;
-  font-size: 1.35rem;
-}
-.purchase-modal-card{
-  margin-bottom: 20px;
-  color: #777;
-}
-.purchase-form-group{
-  margin-bottom: 16px;
-}
-.purchase-form-group label{
-  display:block;
-  margin-bottom:7px;
-  font-weight:600;
-}
-.purchase-form-group input{
-  width:100%;
-  box-sizing:border-box;
-  padding:11px 12px;
-  border:1px solid #d5d5d5;
-  border-radius:9px;
-  font-size:15px;
-  outline:none;
-}
-.purchase-form-group input:focus{
-  border-color:#777;
-  box-shadow:0 0 0 3px rgba(0,0,0,.06);
-}
-.purchase-modal-actions{
-  display:flex;
-  gap:9px;
-  justify-content:flex-end;
-  flex-wrap:wrap;
-  margin-top:22px;
-}
-.purchase-modal-actions button{
-  border:0;
-  border-radius:9px;
-  padding:10px 15px;
-  cursor:pointer;
-  font-weight:600;
-}
-#purchaseCancel{
-  background:#eee;
-  color:#333;
-}
-#purchaseDelete{
-  background:#dc3545;
-  color:#fff;
-  margin-right:auto;
-}
-#purchaseSave{
-  background:#222;
-  color:#fff;
-}
-#purchaseDelete:hover,
-#purchaseSave:hover,
-#purchaseCancel:hover{
-  filter:brightness(.94);
+.purchase-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
 }
 
-@media(max-width:600px){
-  .purchase-section{
-    width:calc(100% - 24px);
-    padding:16px;
-    box-sizing:border-box;
-  }
-  .purchase-modal-box{
-    padding:20px;
-  }
-  .purchase-total{
-    justify-content:space-between;
-  }
+.purchase-section-title {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(14px, 1.2vw, 20px);
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+.purchase-section-subtitle {
+    margin: 5px 0 0;
+
+    color: #717989;
+
+    font-size: clamp(8px, 0.65vw, 10px);
+
+    letter-spacing: 0.4px;
+}
+
+.purchase-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    border-radius: 10px;
+}
+
+.purchase-table {
+    width: 100%;
+
+    min-width: 650px;
+
+    border-collapse: collapse;
+
+    color: #ffffff;
+
+    font-size: clamp(9px, 0.72vw, 12px);
+}
+
+.purchase-table th {
+    padding: 13px 14px;
+
+    background: #171b25;
+
+    color: #e73858;
+
+    border-bottom:
+        1px solid
+        rgba(231,56,88,0.35);
+
+    font-weight: 800;
+
+    text-align: left;
+
+    letter-spacing: 0.5px;
+
+    text-transform: uppercase;
+}
+
+.purchase-table td {
+    padding: 11px 14px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.06);
+
+    color: #d7dbe4;
+
+    vertical-align: middle;
+}
+
+.purchase-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.purchase-table tbody tr:hover {
+    background: rgba(231,56,88,0.045);
+}
+
+.purchase-empty {
+    padding: 24px !important;
+
+    color: #5f6674 !important;
+
+    text-align: center !important;
+
+    font-size: clamp(9px, 0.7vw, 11px);
+}
+
+.purchase-price-cell {
+    min-width: 150px;
+}
+
+.purchase-price-input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 8px 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #0b0e14;
+
+    color: #ffffff;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.purchase-price-input:focus {
+    border-color: rgba(231,56,88,0.75);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(231,56,88,0.10);
+}
+
+.purchase-price-input::placeholder {
+    color: #5f6674;
+}
+
+.purchase-total-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 18px;
+
+    color: #717989;
+
+    font-size: clamp(9px, 0.7vw, 11px);
+
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+}
+
+.purchase-total-value {
+    color: #e73858;
+
+    font-size: clamp(14px, 1.2vw, 20px);
+
+    font-weight: 900;
+
+    letter-spacing: 0;
+}
+
+/* =========================================================
+   PURCHASE MODAL
+   Tema disamakan dengan website
+========================================================= */
+
+.purchase-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(5,7,11,0.78);
+
+    backdrop-filter: blur(7px);
+}
+
+.purchase-modal.show {
+    display: flex;
+}
+
+.purchase-modal-box {
+    position: relative;
+
+    width: min(460px, 100%);
+
+    box-sizing: border-box;
+
+    padding: 26px;
+
+    background: #10131b;
+
+    border:
+        1px solid
+        rgba(231,56,88,0.35);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.65),
+        0 0 35px rgba(231,56,88,0.10);
+
+    animation:
+        purchaseModalIn 0.22s ease;
+}
+
+@keyframes purchaseModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.purchase-modal-label {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    padding: 4px 8px;
+
+    border:
+        1px solid
+        rgba(231,56,88,0.35);
+
+    border-radius: 5px;
+
+    color: #e73858;
+
+    background:
+        rgba(231,56,88,0.07);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.purchase-modal-title {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(18px, 2vw, 25px);
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
+}
+
+.purchase-modal-card-name {
+    margin: 7px 0 22px;
+
+    color: #717989;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+}
+
+.purchase-form-group {
+    margin-bottom: 17px;
+}
+
+.purchase-form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d7dbe4;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+}
+
+.purchase-form-group input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    height: 43px;
+
+    padding: 0 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #0b0e14;
+
+    color: #ffffff;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.purchase-form-group input:focus {
+    border-color: rgba(231,56,88,0.75);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(231,56,88,0.10);
+}
+
+.purchase-modal-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 23px;
+}
+
+.purchase-modal-actions button {
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: 1px solid transparent;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.purchase-modal-actions button:hover {
+    transform: translateY(-1px);
+
+    filter: brightness(1.08);
+}
+
+.purchase-btn-cancel {
+    background: #171b25;
+
+    color: #aab0bd;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.purchase-btn-save {
+    background: #e73858;
+
+    color: #ffffff;
+}
+
+.purchase-btn-delete {
+    margin-right: auto;
+
+    background: transparent;
+
+    color: #e73858;
+
+    border-color:
+        rgba(231,56,88,0.28) !important;
+}
+
+@media (max-width: 600px) {
+
+    .purchase-section {
+        margin-bottom: 30px;
+
+        padding: 15px;
+    }
+
+    .purchase-section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .purchase-table {
+        min-width: 600px;
+    }
+
+    .purchase-modal-box {
+        padding: 21px;
+    }
+
+    .purchase-modal-actions {
+        flex-wrap: wrap;
+    }
+
+    .purchase-btn-delete {
+        width: 100%;
+
+        margin-right: 0;
+
+        order: 3;
+    }
 }
 
 </style>
@@ -3707,58 +4045,80 @@
     ================================================= -->
 
     
-<!-- ===== TABEL DATA PEMBELIAN ===== -->
+<!-- =========================================================
+     DATA PEMBELIAN KOLEKSI
+========================================================= -->
+
 <section class="purchase-section" id="purchaseSection">
-  <h2>Data Pembelian Koleksi</h2>
 
-  <div class="purchase-table-wrap">
-    <table class="purchase-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Tanggal</th>
-          <th>Nama</th>
-          <th>Bahasa</th>
-          <th>Harga</th>
-        </tr>
-      </thead>
-      <tbody id="purchaseTableBody">
-        <tr>
-          <td colspan="5" class="purchase-empty">Belum ada data pembelian.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="purchase-section-header">
 
-  <div class="purchase-total">
-    <span>Total Harga:</span>
-    <strong id="purchaseTotal">Rp0</strong>
-  </div>
+        <div>
+
+            <h2 class="purchase-section-title">
+                Data Pembelian
+            </h2>
+
+            <p class="purchase-section-subtitle">
+                Daftar kartu yang telah ditambahkan ke koleksi
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="purchase-table-wrap">
+
+        <table class="purchase-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>No</th>
+
+                    <th>Tanggal</th>
+
+                    <th>Nama</th>
+
+                    <th>Bahasa</th>
+
+                    <th>Harga</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="purchaseTableBody">
+
+                <!-- Data akan diisi JavaScript -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="purchase-total-row">
+
+        <span>
+            Total Harga
+        </span>
+
+        <span
+            class="purchase-total-value"
+            id="purchaseTotal"
+        >
+            Rp0
+        </span>
+
+    </div>
+
 </section>
 
-<!-- ===== MODAL DATA PEMBELIAN ===== -->
-<div class="purchase-modal" id="purchaseModal" aria-hidden="true">
-  <div class="purchase-modal-box" role="dialog" aria-modal="true">
-    <h3 class="purchase-modal-title">Data Pembelian</h3>
-    <div class="purchase-modal-card" id="purchaseModalCard">Nama kartu</div>
-
-    <div class="purchase-form-group">
-      <label for="purchaseDate">Tanggal Pembelian</label>
-      <input type="date" id="purchaseDate">
-    </div>
-
-    <div class="purchase-form-group">
-      <label for="purchasePrice">Harga Pembelian</label>
-      <input type="number" id="purchasePrice" min="0" step="1" placeholder="Contoh: 50000">
-    </div>
-
-    <div class="purchase-modal-actions">
-      <button type="button" id="purchaseDelete">Hapus dari Koleksi</button>
-      <button type="button" id="purchaseCancel">Batal</button>
-      <button type="button" id="purchaseSave">Simpan</button>
-    </div>
-  </div>
-</div>
 
 <footer class="footer">
 
@@ -3773,372 +4133,1874 @@
 
 
 
+
+<!-- =========================================================
+     POPUP DATA PEMBELIAN
+========================================================= -->
+
+<div
+    class="purchase-modal"
+    id="purchaseModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="purchase-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="purchaseModalTitle"
+    >
+
+        <div class="purchase-modal-label">
+            Collection
+        </div>
+
+        <h3
+            class="purchase-modal-title"
+            id="purchaseModalTitle"
+        >
+            Data Pembelian
+        </h3>
+
+        <div
+            class="purchase-modal-card-name"
+            id="purchaseModalCardName"
+        >
+            Nama kartu
+        </div>
+
+
+        <div class="purchase-form-group">
+
+            <label for="purchaseDate">
+                Tanggal Pembelian
+            </label>
+
+            <input
+                type="date"
+                id="purchaseDate"
+            >
+
+        </div>
+
+
+        <div class="purchase-form-group">
+
+            <label for="purchasePrice">
+                Harga Pembelian
+            </label>
+
+            <input
+                type="number"
+                id="purchasePrice"
+                min="0"
+                step="1"
+                placeholder="Contoh: 150000"
+            >
+
+        </div>
+
+
+        <div class="purchase-modal-actions">
+
+            <button
+                type="button"
+                class="purchase-btn-delete"
+                id="purchaseDelete"
+            >
+                Hapus
+            </button>
+
+            <button
+                type="button"
+                class="purchase-btn-cancel"
+                id="purchaseCancel"
+            >
+                Batal
+            </button>
+
+            <button
+                type="button"
+                class="purchase-btn-save"
+                id="purchaseSave"
+            >
+                Simpan
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <!-- =====================================================
      JAVASCRIPT
 ===================================================== -->
 
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const STORAGE_OWNED = "pokeyOwnedCards";
-  const STORAGE_PURCHASE = "pokeyPurchaseData";
 
-  let ownedCards = JSON.parse(localStorage.getItem(STORAGE_OWNED) || "[]");
-  let purchaseData = JSON.parse(localStorage.getItem(STORAGE_PURCHASE) || "{}");
+    // =================================================
+    // BACKGROUND MUSIC
+    // =================================================
 
-  let activeCard = null;
-  let isNewPurchase = false;
+    const bgMusic = document.getElementById("bgMusic");
 
-  const modal = document.getElementById("purchaseModal");
-  const modalCard = document.getElementById("purchaseModalCard");
-  const dateInput = document.getElementById("purchaseDate");
-  const priceInput = document.getElementById("purchasePrice");
-  const saveButton = document.getElementById("purchaseSave");
-  const cancelButton = document.getElementById("purchaseCancel");
-  const deleteButton = document.getElementById("purchaseDelete");
-  const tableBody = document.getElementById("purchaseTableBody");
-  const totalElement = document.getElementById("purchaseTotal");
+    bgMusic.volume = 0.5;
 
-  function getCardName(card) {
-    const nameElement = card.querySelector(".card-name");
-    if (nameElement) return nameElement.textContent.trim();
+    // Coba langsung memainkan musik saat halaman dibuka
+    window.addEventListener("load", function () {
 
-    return (
-      card.dataset.name ||
-      card.getAttribute("data-card-name") ||
-      "Kartu Tanpa Nama"
-    ).trim();
-  }
+        bgMusic.play().catch(function () {
 
-  function getCardLanguage(card) {
-    const grid = card.closest("[data-language]");
-    if (grid) {
-      const language = grid.dataset.language.trim();
-      const normalized = language.toLowerCase();
+            console.log(
+                "Autoplay diblokir browser. Musik akan dimainkan setelah interaksi pengguna."
+            );
 
-      if (normalized.includes("indonesia")) return "Indonesia";
-      if (normalized.includes("english") || normalized.includes("inggris")) return "English";
-      if (normalized.includes("japan") || normalized.includes("jepang")) return "Japan";
+        });
 
-      return language;
-    }
-
-    if (card.dataset.language) return card.dataset.language;
-
-    return "-";
-  }
-
-  function getToday() {
-    const d = new Date();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
-
-  function formatDate(dateString) {
-    if (!dateString) return "-";
-
-    const parts = dateString.split("-");
-    if (parts.length !== 3) return dateString;
-
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-  }
-
-  function formatRupiah(value) {
-    const number = Number(value) || 0;
-    return "Rp" + number.toLocaleString("id-ID");
-  }
-
-  function saveData() {
-    localStorage.setItem(STORAGE_OWNED, JSON.stringify(ownedCards));
-    localStorage.setItem(STORAGE_PURCHASE, JSON.stringify(purchaseData));
-  }
-
-  function updateCardVisual(card, owned) {
-    if (!card) return;
-    card.classList.toggle("owned", owned);
-  }
-
-  function getAllCards() {
-    return Array.from(document.querySelectorAll(".card"));
-  }
-
-  function renderPurchaseTable() {
-    if (!tableBody || !totalElement) return;
-
-    tableBody.innerHTML = "";
-
-    let no = 1;
-    let total = 0;
-
-    const cards = getAllCards();
-
-    cards.forEach(card => {
-      const name = getCardName(card);
-      const data = purchaseData[name];
-
-      if (!data) return;
-
-      const row = document.createElement("tr");
-
-      const noCell = document.createElement("td");
-      noCell.textContent = no++;
-
-      const dateCell = document.createElement("td");
-      dateCell.textContent = formatDate(data.date);
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = name;
-
-      const languageCell = document.createElement("td");
-      languageCell.textContent = getCardLanguage(card);
-
-      const priceCell = document.createElement("td");
-      priceCell.className = "price";
-      priceCell.textContent = formatRupiah(data.price);
-
-      row.append(noCell, dateCell, nameCell, languageCell, priceCell);
-      tableBody.appendChild(row);
-
-      total += Number(data.price) || 0;
     });
 
-    /*
-     * Jika ada data pembelian yang tersimpan tetapi kartu tidak ditemukan
-     * pada halaman saat ini, tetap tampilkan datanya.
-     */
-    Object.keys(purchaseData).forEach(name => {
-      const exists = cards.some(card => getCardName(card) === name);
-      if (exists) return;
+    // Fallback jika autoplay diblokir
+    function startMusic() {
 
-      const data = purchaseData[name];
-      if (!data) return;
+        if (bgMusic.paused) {
 
-      const row = document.createElement("tr");
+            bgMusic.play().catch(function () {});
 
-      const noCell = document.createElement("td");
-      noCell.textContent = no++;
+        }
 
-      const dateCell = document.createElement("td");
-      dateCell.textContent = formatDate(data.date);
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = name;
-
-      const languageCell = document.createElement("td");
-      languageCell.textContent = data.language || "-";
-
-      const priceCell = document.createElement("td");
-      priceCell.className = "price";
-      priceCell.textContent = formatRupiah(data.price);
-
-      row.append(noCell, dateCell, nameCell, languageCell, priceCell);
-      tableBody.appendChild(row);
-
-      total += Number(data.price) || 0;
-    });
-
-    if (no === 1) {
-      const emptyRow = document.createElement("tr");
-      const emptyCell = document.createElement("td");
-      emptyCell.colSpan = 5;
-      emptyCell.className = "purchase-empty";
-      emptyCell.textContent = "Belum ada data pembelian.";
-      emptyRow.appendChild(emptyCell);
-      tableBody.appendChild(emptyRow);
     }
 
-    totalElement.textContent = formatRupiah(total);
-  }
-
-  function updateProgressSafely() {
-    /*
-     * Memakai fungsi updateProgress() dari program asli jika tersedia.
-     * Jadi fitur progress yang sudah ada tidak rusak.
-     */
-    if (typeof window.updateProgress === "function") {
-      window.updateProgress();
-    }
-  }
-
-  function applyExistingOwnedState() {
-    getAllCards().forEach(card => {
-      const name = getCardName(card);
-      const owned = ownedCards.includes(name) || !!purchaseData[name];
-      updateCardVisual(card, owned);
-    });
-  }
-
-  function openPurchaseModal(card, newPurchase) {
-    activeCard = card;
-    isNewPurchase = newPurchase;
-
-    const name = getCardName(card);
-    const existing = purchaseData[name];
-
-    modalCard.textContent = name;
-
-    if (existing) {
-      dateInput.value = existing.date || "";
-      priceInput.value = existing.price ?? "";
-      deleteButton.style.display = "block";
-    } else {
-      dateInput.value = getToday();
-      priceInput.value = "";
-      deleteButton.style.display = "none";
-    }
-
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden", "false");
-
-    setTimeout(() => {
-      if (existing) {
-        priceInput.focus();
-      } else {
-        dateInput.focus();
-      }
-    }, 50);
-  }
-
-  function closePurchaseModal() {
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-    activeCard = null;
-    isNewPurchase = false;
-  }
-
-  function removeOwnedCard(name) {
-    ownedCards = ownedCards.filter(item => item !== name);
-    delete purchaseData[name];
-  }
-
-  // Terapkan status tersimpan ketika halaman dibuka.
-  applyExistingOwnedState();
-
-  // Double-click kartu:
-  // - kartu belum dimiliki -> ubah warna + buka popup
-  // - kartu sudah dimiliki -> buka popup untuk edit data
-  getAllCards().forEach(card => {
-    card.addEventListener("dblclick", function () {
-      const name = getCardName(card);
-      const alreadyOwned = ownedCards.includes(name) || !!purchaseData[name];
-
-      if (!alreadyOwned) {
-        ownedCards.push(name);
-        updateCardVisual(card, true);
-        saveData();
-        updateProgressSafely();
-        openPurchaseModal(card, true);
-      } else {
-        openPurchaseModal(card, false);
-      }
-    });
-  });
-
-  saveButton.addEventListener("click", function () {
-    if (!activeCard) return;
-
-    const name = getCardName(activeCard);
-    const language = getCardLanguage(activeCard);
-    const date = dateInput.value;
-    const price = Number(priceInput.value);
-
-    if (!date) {
-      alert("Silakan isi tanggal pembelian.");
-      dateInput.focus();
-      return;
-    }
-
-    if (!Number.isFinite(price) || price < 0) {
-      alert("Silakan isi harga pembelian yang valid.");
-      priceInput.focus();
-      return;
-    }
-
-    if (!ownedCards.includes(name)) {
-      ownedCards.push(name);
-    }
-
-    purchaseData[name] = {
-      date: date,
-      price: price,
-      language: language
-    };
-
-    updateCardVisual(activeCard, true);
-    saveData();
-    renderPurchaseTable();
-    updateProgressSafely();
-    closePurchaseModal();
-  });
-
-  cancelButton.addEventListener("click", function () {
-    /*
-     * Jika double-click kartu baru lalu pengguna membatalkan,
-     * kartu dikembalikan menjadi belum dimiliki.
-     */
-    if (activeCard && isNewPurchase) {
-      const name = getCardName(activeCard);
-
-      if (!purchaseData[name]) {
-        removeOwnedCard(name);
-        updateCardVisual(activeCard, false);
-        saveData();
-        updateProgressSafely();
-      }
-    }
-
-    closePurchaseModal();
-  });
-
-  deleteButton.addEventListener("click", function () {
-    if (!activeCard) return;
-
-    const name = getCardName(activeCard);
-
-    const confirmed = confirm(
-      `Hapus "${name}" dari koleksi?\n\nData pembelian juga akan dihapus.`
+    // Jalankan musik setelah interaksi pertama pengguna
+    document.addEventListener(
+        "click",
+        startMusic,
+        { once: true }
     );
 
-    if (!confirmed) return;
+    document.addEventListener(
+        "touchstart",
+        startMusic,
+        { once: true }
+    );
 
-    removeOwnedCard(name);
-    updateCardVisual(activeCard, false);
-    saveData();
+    document.addEventListener(
+        "keydown",
+        startMusic,
+        { once: true }
+    );
+
+
+    // =================================================
+    // ELEMENT
+    // =================================================
+
+    const backButton =
+        document.getElementById(
+            "backButton"
+        );
+
+    const cardGrid =
+        document.getElementById(
+            "cardGrid"
+        );
+
+    const cards =
+        document.querySelectorAll(
+            ".pokemon-card"
+        );
+
+    const cardProgress =
+        document.getElementById(
+            "cardProgress"
+        );
+
+    // =================================================
+    // SEARCH & FILTER ELEMENT
+    // =================================================
+    
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+    
+    const languageFilter =
+        document.getElementById(
+            "languageFilter"
+        );
+    
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+    
+    const clearSearch =
+        document.getElementById(
+            "clearSearch"
+        );
+    
+    const searchResultInfo =
+        document.getElementById(
+            "searchResultInfo"
+        );
+
+    const lightbox =
+        document.getElementById(
+            "lightbox"
+        );
+
+    const lightboxImage =
+        document.getElementById(
+            "lightboxImage"
+        );
+
+    const lightboxTitle =
+        document.getElementById(
+            "lightboxTitle"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "closeButton"
+        );
+
+
+    // =================================================
+    // BACK TO 3D VIEWER
+    // =================================================
+
+    backButton.addEventListener(
+        "click",
+        function () {
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+
+    // =================================================
+    // COLLECTION & PURCHASE DATA
+    // =================================================
+
+    let ownedCards =
+        JSON.parse(
+            localStorage.getItem(
+                "pokeyOwnedCards"
+            )
+        ) || [];
+
+
+    let purchaseData =
+        JSON.parse(
+            localStorage.getItem(
+                "pokeyPurchaseData"
+            )
+        ) || {};
+
+
+    const purchaseModal =
+        document.getElementById(
+            "purchaseModal"
+        );
+
+
+    const purchaseModalCardName =
+        document.getElementById(
+            "purchaseModalCardName"
+        );
+
+
+    const purchaseDate =
+        document.getElementById(
+            "purchaseDate"
+        );
+
+
+    const purchasePrice =
+        document.getElementById(
+            "purchasePrice"
+        );
+
+
+    const purchaseSave =
+        document.getElementById(
+            "purchaseSave"
+        );
+
+
+    const purchaseCancel =
+        document.getElementById(
+            "purchaseCancel"
+        );
+
+
+    const purchaseDelete =
+        document.getElementById(
+            "purchaseDelete"
+        );
+
+
+    const purchaseTableBody =
+        document.getElementById(
+            "purchaseTableBody"
+        );
+
+
+    const purchaseTotal =
+        document.getElementById(
+            "purchaseTotal"
+        );
+
+
+    let activeCard = null;
+
+    let activeCardTitle = null;
+
+    let activeIsNew = false;
+
+
+    // =================================================
+    // SAVE COLLECTION DATA
+    // =================================================
+
+    function saveCollectionData() {
+
+        localStorage.setItem(
+            "pokeyOwnedCards",
+            JSON.stringify(
+                ownedCards
+            )
+        );
+
+
+        localStorage.setItem(
+            "pokeyPurchaseData",
+            JSON.stringify(
+                purchaseData
+            )
+        );
+
+    }
+
+
+    // =================================================
+    // CARD NAME
+    // =================================================
+
+    function getCardName(card) {
+
+        const nameElement =
+            card.querySelector(
+                ".card-name"
+            );
+
+
+        if (
+            nameElement &&
+            nameElement.textContent.trim()
+        ) {
+
+            return nameElement
+                .textContent
+                .trim();
+
+        }
+
+
+        return (
+            card.dataset.title ||
+            "Unknown Card"
+        );
+
+    }
+
+
+    // =================================================
+    // CARD LANGUAGE
+    // =================================================
+
+    function getCardLanguage(card) {
+
+        const parentGrid =
+            card.closest(
+                ".card-grid"
+            );
+
+
+        const language =
+            parentGrid?.dataset.language ||
+            card.dataset.language ||
+            "-";
+
+
+        const normalized =
+            language
+                .toLowerCase()
+                .trim();
+
+
+        if (
+            normalized ===
+            "indonesia"
+        ) {
+
+            return "Indonesia";
+
+        }
+
+
+        if (
+            normalized ===
+            "english"
+        ) {
+
+            return "English";
+
+        }
+
+
+        if (
+            normalized ===
+            "japan"
+        ) {
+
+            return "Japan";
+
+        }
+
+
+        return language;
+
+    }
+
+
+    // =================================================
+    // TODAY
+    // =================================================
+
+    function getToday() {
+
+        const date =
+            new Date();
+
+
+        const year =
+            date.getFullYear();
+
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        return (
+            year +
+            "-" +
+            month +
+            "-" +
+            day
+        );
+
+    }
+
+
+    // =================================================
+    // FORMAT DATE
+    // =================================================
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return "-";
+        }
+
+
+        const parts =
+            dateValue.split("-");
+
+
+        if (
+            parts.length !== 3
+        ) {
+
+            return dateValue;
+
+        }
+
+
+        return (
+            parts[2] +
+            "/" +
+            parts[1] +
+            "/" +
+            parts[0]
+        );
+
+    }
+
+
+    // =================================================
+    // FORMAT RUPIAH
+    // =================================================
+
+    function formatRupiah(value) {
+
+        const number =
+            Number(value) || 0;
+
+
+        return (
+            "Rp" +
+            number.toLocaleString(
+                "id-ID"
+            )
+        );
+
+    }
+
+
+    // =================================================
+    // UPDATE PROGRESS
+    // =================================================
+
+    function updateProgress() {
+
+        const ownedCount =
+            document.querySelectorAll(
+                ".pokemon-card.owned"
+            ).length;
+
+
+        const totalCount =
+            document.querySelectorAll(
+                ".pokemon-card"
+            ).length;
+
+
+        cardProgress.textContent =
+            ownedCount +
+            "/" +
+            totalCount;
+
+    }
+
+
+    // =================================================
+    // RENDER PURCHASE TABLE
+    // =================================================
+
+    function renderPurchaseTable() {
+
+        if (
+            !purchaseTableBody ||
+            !purchaseTotal
+        ) {
+
+            return;
+
+        }
+
+
+        purchaseTableBody.innerHTML =
+            "";
+
+
+        let rowNumber = 1;
+
+        let totalPrice = 0;
+
+
+        /*
+         * Mengikuti urutan kartu di website.
+         * Setiap kartu yang sudah mempunyai data pembelian
+         * akan masuk ke tabel.
+         */
+
+        cards.forEach(
+            function(card) {
+
+                const title =
+                    card.dataset.title;
+
+
+                const data =
+                    purchaseData[title];
+
+
+                if (!data) {
+                    return;
+                }
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const noCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                noCell.textContent =
+                    rowNumber++;
+
+
+                const dateCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                dateCell.textContent =
+                    formatDate(
+                        data.date
+                    );
+
+
+                const nameCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                nameCell.textContent =
+                    getCardName(
+                        card
+                    );
+
+
+                const languageCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                languageCell.textContent =
+                    getCardLanguage(
+                        card
+                    );
+
+
+                const priceCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                priceCell.className =
+                    "purchase-price-cell";
+
+
+                /*
+                 * Harga dibuat sebagai input.
+                 * Jadi harga dapat langsung diedit
+                 * dari tabel.
+                 */
+
+                const priceInput =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                priceInput.type =
+                    "number";
+
+
+                priceInput.min =
+                    "0";
+
+
+                priceInput.step =
+                    "1";
+
+
+                priceInput.className =
+                    "purchase-price-input";
+
+
+                priceInput.value =
+                    Number(
+                        data.price
+                    ) || 0;
+
+
+                priceInput.title =
+                    "Edit harga";
+
+
+                priceInput.addEventListener(
+                    "change",
+                    function() {
+
+                        const newPrice =
+                            Number(
+                                priceInput.value
+                            );
+
+
+                        if (
+                            !Number.isFinite(
+                                newPrice
+                            ) ||
+                            newPrice < 0
+                        ) {
+
+                            alert(
+                                "Harga tidak valid."
+                            );
+
+
+                            priceInput.value =
+                                Number(
+                                    data.price
+                                ) || 0;
+
+
+                            return;
+
+                        }
+
+
+                        purchaseData[
+                            title
+                        ].price =
+                            newPrice;
+
+
+                        saveCollectionData();
+
+
+                        renderPurchaseTable();
+
+                    }
+                );
+
+
+                priceCell.appendChild(
+                    priceInput
+                );
+
+
+                row.appendChild(
+                    noCell
+                );
+
+                row.appendChild(
+                    dateCell
+                );
+
+                row.appendChild(
+                    nameCell
+                );
+
+                row.appendChild(
+                    languageCell
+                );
+
+                row.appendChild(
+                    priceCell
+                );
+
+
+                purchaseTableBody.appendChild(
+                    row
+                );
+
+
+                totalPrice +=
+                    Number(
+                        data.price
+                    ) || 0;
+
+            }
+        );
+
+
+        /*
+         * Jika ada data tersimpan untuk kartu yang
+         * tidak sedang ditemukan di DOM, tetap tampilkan.
+         */
+
+        Object.keys(
+            purchaseData
+        ).forEach(
+            function(title) {
+
+                const exists =
+                    Array.from(
+                        cards
+                    ).some(
+                        function(card) {
+
+                            return (
+                                card.dataset.title ===
+                                title
+                            );
+
+                        }
+                    );
+
+
+                if (exists) {
+                    return;
+                }
+
+
+                const data =
+                    purchaseData[
+                        title
+                    ];
+
+
+                if (!data) {
+                    return;
+                }
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const noCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                noCell.textContent =
+                    rowNumber++;
+
+
+                const dateCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                dateCell.textContent =
+                    formatDate(
+                        data.date
+                    );
+
+
+                const nameCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                nameCell.textContent =
+                    data.name ||
+                    title;
+
+
+                const languageCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                languageCell.textContent =
+                    data.language ||
+                    "-";
+
+
+                const priceCell =
+                    document.createElement(
+                        "td"
+                    );
+
+                priceCell.className =
+                    "purchase-price-cell";
+
+
+                const priceInput =
+                    document.createElement(
+                        "input"
+                    );
+
+                priceInput.type =
+                    "number";
+
+                priceInput.min =
+                    "0";
+
+                priceInput.step =
+                    "1";
+
+                priceInput.className =
+                    "purchase-price-input";
+
+                priceInput.value =
+                    Number(
+                        data.price
+                    ) || 0;
+
+
+                priceInput.addEventListener(
+                    "change",
+                    function() {
+
+                        const newPrice =
+                            Number(
+                                priceInput.value
+                            );
+
+
+                        if (
+                            !Number.isFinite(
+                                newPrice
+                            ) ||
+                            newPrice < 0
+                        ) {
+
+                            alert(
+                                "Harga tidak valid."
+                            );
+
+
+                            priceInput.value =
+                                Number(
+                                    data.price
+                                ) || 0;
+
+
+                            return;
+
+                        }
+
+
+                        purchaseData[
+                            title
+                        ].price =
+                            newPrice;
+
+
+                        saveCollectionData();
+
+
+                        renderPurchaseTable();
+
+                    }
+                );
+
+
+                priceCell.appendChild(
+                    priceInput
+                );
+
+
+                row.appendChild(
+                    noCell
+                );
+
+                row.appendChild(
+                    dateCell
+                );
+
+                row.appendChild(
+                    nameCell
+                );
+
+                row.appendChild(
+                    languageCell
+                );
+
+                row.appendChild(
+                    priceCell
+                );
+
+
+                purchaseTableBody.appendChild(
+                    row
+                );
+
+
+                totalPrice +=
+                    Number(
+                        data.price
+                    ) || 0;
+
+            }
+        );
+
+
+        /*
+         * Tabel tetap ada dan tetap memiliki desain
+         * walaupun belum ada kartu yang diinput.
+         */
+
+        if (
+            rowNumber === 1
+        ) {
+
+            const emptyRow =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const emptyCell =
+                document.createElement(
+                    "td"
+                );
+
+
+            emptyCell.colSpan =
+                5;
+
+
+            emptyCell.className =
+                "purchase-empty";
+
+
+            emptyCell.textContent =
+                "Belum ada data pembelian.";
+
+
+            emptyRow.appendChild(
+                emptyCell
+            );
+
+
+            purchaseTableBody.appendChild(
+                emptyRow
+            );
+
+        }
+
+
+        purchaseTotal.textContent =
+            formatRupiah(
+                totalPrice
+            );
+
+    }
+
+
+    // =================================================
+    // OPEN PURCHASE MODAL
+    // =================================================
+
+    function openPurchaseModal(
+        card,
+        newPurchase
+    ) {
+
+        activeCard =
+            card;
+
+
+        activeCardTitle =
+            card.dataset.title;
+
+
+        activeIsNew =
+            newPurchase;
+
+
+        const title =
+            card.dataset.title;
+
+
+        const existingData =
+            purchaseData[
+                title
+            ];
+
+
+        purchaseModalCardName.textContent =
+            getCardName(
+                card
+            );
+
+
+        if (existingData) {
+
+            purchaseDate.value =
+                existingData.date ||
+                "";
+
+
+            purchasePrice.value =
+                existingData.price ??
+                "";
+
+
+            purchaseDelete.style.display =
+                "block";
+
+        }
+
+        else {
+
+            purchaseDate.value =
+                getToday();
+
+
+            purchasePrice.value =
+                "";
+
+
+            purchaseDelete.style.display =
+                "none";
+
+        }
+
+
+        purchaseModal.classList.add(
+            "show"
+        );
+
+
+        purchaseModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        setTimeout(
+            function() {
+
+                if (
+                    existingData
+                ) {
+
+                    purchasePrice.focus();
+
+                }
+
+                else {
+
+                    purchaseDate.focus();
+
+                }
+
+            },
+            80
+        );
+
+    }
+
+
+    // =================================================
+    // CLOSE MODAL
+    // =================================================
+
+    function closePurchaseModal() {
+
+        purchaseModal.classList.remove(
+            "show"
+        );
+
+
+        purchaseModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        activeCard =
+            null;
+
+
+        activeCardTitle =
+            null;
+
+
+        activeIsNew =
+            false;
+
+    }
+
+
+    // =================================================
+    // APPLY SAVED STATUS
+    // =================================================
+
+    cards.forEach(
+        function(card) {
+
+            const title =
+                card.dataset.title;
+
+
+            if (
+                ownedCards.includes(
+                    title
+                ) ||
+                purchaseData[
+                    title
+                ]
+            ) {
+
+                card.classList.add(
+                    "owned"
+                );
+
+            }
+
+        }
+    );
+
+
+    // =================================================
+    // SEARCH & FILTER
+    // =================================================
+
+    function applySearchAndFilter() {
+
+        const searchValue =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const selectedLanguage =
+            languageFilter.value;
+
+
+        const selectedStatus =
+            statusFilter.value;
+
+
+        let visibleCount =
+            0;
+
+
+        cards.forEach(
+            function(card) {
+
+                const cardName =
+                    card.querySelector(
+                        ".card-name"
+                    )?.textContent
+                    .trim()
+                    .toLowerCase() ||
+                    "";
+
+
+                const cardTitle =
+                    card.dataset.title
+                        ?.toLowerCase() ||
+                    "";
+
+
+                const parentGrid =
+                    card.closest(
+                        ".card-grid"
+                    );
+
+
+                const cardLanguage =
+                    parentGrid
+                        ?.dataset.language
+                        ?.toLowerCase() ||
+                    "";
+
+
+                const matchesSearch =
+                    searchValue === "" ||
+                    cardName.includes(
+                        searchValue
+                    ) ||
+                    cardTitle.includes(
+                        searchValue
+                    );
+
+
+                const matchesLanguage =
+                    selectedLanguage ===
+                        "all" ||
+                    cardLanguage ===
+                        selectedLanguage;
+
+
+                const isOwned =
+                    card.classList.contains(
+                        "owned"
+                    );
+
+
+                let matchesStatus =
+                    true;
+
+
+                if (
+                    selectedStatus ===
+                    "owned"
+                ) {
+
+                    matchesStatus =
+                        isOwned;
+
+                }
+
+
+                if (
+                    selectedStatus ===
+                    "not-owned"
+                ) {
+
+                    matchesStatus =
+                        !isOwned;
+
+                }
+
+
+                const shouldShow =
+                    matchesSearch &&
+                    matchesLanguage &&
+                    matchesStatus;
+
+
+                if (
+                    shouldShow
+                ) {
+
+                    card.classList.remove(
+                        "search-hidden"
+                    );
+
+
+                    visibleCount++;
+
+                }
+
+                else {
+
+                    card.classList.add(
+                        "search-hidden"
+                    );
+
+                }
+
+            }
+        );
+
+
+        searchResultInfo.textContent =
+            "Showing " +
+            visibleCount +
+            " of " +
+            cards.length +
+            " cards";
+
+
+        if (
+            searchInput.value
+                .trim() !== ""
+        ) {
+
+            clearSearch.classList.add(
+                "show"
+            );
+
+        }
+
+        else {
+
+            clearSearch.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    // =================================================
+    // SEARCH INPUT
+    // =================================================
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            applySearchAndFilter();
+
+        }
+    );
+
+
+    // =================================================
+    // LANGUAGE FILTER
+    // =================================================
+
+    languageFilter.addEventListener(
+        "change",
+        function() {
+
+            applySearchAndFilter();
+
+        }
+    );
+
+
+    // =================================================
+    // STATUS FILTER
+    // =================================================
+
+    statusFilter.addEventListener(
+        "change",
+        function() {
+
+            applySearchAndFilter();
+
+        }
+    );
+
+
+    // =================================================
+    // CLEAR SEARCH
+    // =================================================
+
+    clearSearch.addEventListener(
+        "click",
+        function() {
+
+            searchInput.value =
+                "";
+
+
+            applySearchAndFilter();
+
+
+            searchInput.focus();
+
+        }
+    );
+
+
+    // =================================================
+    // DOUBLE CLICK CARD
+    // =================================================
+
+    cards.forEach(
+        function(card) {
+
+            card.addEventListener(
+                "dblclick",
+                function() {
+
+                    const title =
+                        card.dataset.title;
+
+
+                    const isOwned =
+                        card.classList.contains(
+                            "owned"
+                        );
+
+
+                    /*
+                     * Kartu belum dimiliki:
+                     * langsung dibuat berwarna dan popup muncul.
+                     */
+
+                    if (!isOwned) {
+
+                        card.classList.add(
+                            "owned"
+                        );
+
+
+                        if (
+                            !ownedCards.includes(
+                                title
+                            )
+                        ) {
+
+                            ownedCards.push(
+                                title
+                            );
+
+                        }
+
+
+                        saveCollectionData();
+
+
+                        updateProgress();
+
+
+                        applySearchAndFilter();
+
+
+                        openPurchaseModal(
+                            card,
+                            true
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Kartu sudah dimiliki:
+                     * jangan dibuat abu-abu lagi.
+                     * Double-click membuka data pembelian
+                     * untuk diedit.
+                     */
+
+                    openPurchaseModal(
+                        card,
+                        false
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    // =================================================
+    // SAVE PURCHASE DATA
+    // =================================================
+
+    purchaseSave.addEventListener(
+        "click",
+        function() {
+
+            if (
+                !activeCard ||
+                !activeCardTitle
+            ) {
+
+                return;
+
+            }
+
+
+            const date =
+                purchaseDate.value;
+
+
+            const price =
+                Number(
+                    purchasePrice.value
+                );
+
+
+            if (!date) {
+
+                alert(
+                    "Silakan isi tanggal pembelian."
+                );
+
+
+                purchaseDate.focus();
+
+
+                return;
+
+            }
+
+
+            if (
+                !Number.isFinite(price) ||
+                price < 0
+            ) {
+
+                alert(
+                    "Silakan isi harga pembelian yang valid."
+                );
+
+
+                purchasePrice.focus();
+
+
+                return;
+
+            }
+
+
+            const title =
+                activeCardTitle;
+
+
+            /*
+             * Data disimpan berdasarkan data-title
+             * agar setiap kartu memiliki satu data pembelian.
+             */
+
+            purchaseData[
+                title
+            ] = {
+
+                date:
+                    date,
+
+                price:
+                    price,
+
+                name:
+                    getCardName(
+                        activeCard
+                    ),
+
+                language:
+                    getCardLanguage(
+                        activeCard
+                    )
+
+            };
+
+
+            if (
+                !ownedCards.includes(
+                    title
+                )
+            ) {
+
+                ownedCards.push(
+                    title
+                );
+
+            }
+
+
+            activeCard.classList.add(
+                "owned"
+            );
+
+
+            saveCollectionData();
+
+
+            renderPurchaseTable();
+
+
+            updateProgress();
+
+
+            applySearchAndFilter();
+
+
+            closePurchaseModal();
+
+        }
+    );
+
+
+    // =================================================
+    // CANCEL
+    // =================================================
+
+    purchaseCancel.addEventListener(
+        "click",
+        function() {
+
+            /*
+             * Jika kartu baru saja dipilih tetapi
+             * belum disimpan, kembalikan menjadi
+             * belum dimiliki.
+             */
+
+            if (
+                activeCard &&
+                activeIsNew &&
+                !purchaseData[
+                    activeCardTitle
+                ]
+            ) {
+
+                const index =
+                    ownedCards.indexOf(
+                        activeCardTitle
+                    );
+
+
+                if (
+                    index !== -1
+                ) {
+
+                    ownedCards.splice(
+                        index,
+                        1
+                    );
+
+                }
+
+
+                activeCard.classList.remove(
+                    "owned"
+                );
+
+
+                saveCollectionData();
+
+
+                updateProgress();
+
+
+                applySearchAndFilter();
+
+            }
+
+
+            closePurchaseModal();
+
+        }
+    );
+
+
+    // =================================================
+    // DELETE
+    // =================================================
+
+    purchaseDelete.addEventListener(
+        "click",
+        function() {
+
+            if (
+                !activeCard ||
+                !activeCardTitle
+            ) {
+
+                return;
+
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Hapus kartu ini dari koleksi?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            const title =
+                activeCardTitle;
+
+
+            delete purchaseData[
+                title
+            ];
+
+
+            const index =
+                ownedCards.indexOf(
+                    title
+                );
+
+
+            if (
+                index !== -1
+            ) {
+
+                ownedCards.splice(
+                    index,
+                    1
+                );
+
+            }
+
+
+            activeCard.classList.remove(
+                "owned"
+            );
+
+
+            saveCollectionData();
+
+
+            renderPurchaseTable();
+
+
+            updateProgress();
+
+
+            applySearchAndFilter();
+
+
+            closePurchaseModal();
+
+        }
+    );
+
+
+    // =================================================
+    // CLICK OUTSIDE MODAL
+    // =================================================
+
+    purchaseModal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                purchaseModal
+            ) {
+
+                purchaseCancel.click();
+
+            }
+
+        }
+    );
+
+
+    // =================================================
+    // ESCAPE
+    // =================================================
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                purchaseModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                purchaseCancel.click();
+
+            }
+
+        }
+    );
+
+
+    // =================================================
+    // INITIAL UPDATE
+    // =================================================
+
+    updateProgress();
+
+
+    applySearchAndFilter();
+
+
     renderPurchaseTable();
-    updateProgressSafely();
-    closePurchaseModal();
-  });
 
-  // Klik area gelap untuk menutup modal.
-  modal.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      cancelButton.click();
-    }
-  });
 
-  // Tombol Escape.
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && modal.classList.contains("show")) {
-      cancelButton.click();
-    }
-  });
-
-  // Render awal.
-  renderPurchaseTable();
-  updateProgressSafely();
-
-  /*
-   * Jika program asli mempunyai fungsi filter/search yang membaca
-   * class .owned, kita jalankan kembali setelah status kartu dipulihkan.
-   */
-  if (typeof window.applySearchAndFilter === "function") {
-    window.applySearchAndFilter();
-  }
-});
 </script>
-
 
 
 </body>
